@@ -1013,6 +1013,7 @@ function render() {
 
   // Victory screen
   setHidden('victoryPanel', !done);
+  setHidden('devCompleteNote', !done);
   if (done) renderVictory();
 
   // Event log
@@ -1257,6 +1258,7 @@ function start() {
   });
 
   el('resetButton').addEventListener('click', requestReset);
+  el('newStallButton').addEventListener('click', requestReset);
   el('resetYes').addEventListener('click', () => resetGame());
   el('resetNo').addEventListener('click', cancelReset);
 
