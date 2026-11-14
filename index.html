@@ -32,6 +32,7 @@
     <!-- 2. PRODUCTION -->
     <section class="panel game-only" id="productionPanel">
       <h2>Production</h2>
+      <button type="button" class="challenge-alert" id="challengeAlert" hidden></button>
       <button type="button" class="make-button" id="makeButton">Make &amp; Sell Roti Canai</button>
       <p class="feedback" id="clickFeedback" aria-live="polite">&nbsp;</p>
       <p class="small" id="priceInfo">Selling price RM1.50 (ingredients RM0.50, profit RM1.00)</p>
@@ -45,10 +46,75 @@
           <div><dt>Auto income</dt><dd id="autoIncome">RM0.00/sec</dd></div>
         </dl>
         <p class="hint" id="limitHint"></p>
+        <p class="small" id="modifierInfo"></p>
       </div>
     </section>
 
-    <!-- 3. UPGRADES -->
+    <!-- 3. CHALLENGES (v0.2) -->
+    <section class="panel game-only" id="challengesPanel" hidden>
+      <h2>Challenges</h2>
+      <div id="challengeActive" class="challenge" hidden>
+        <p class="tier" id="chTier" data-tier="small"></p>
+        <h3 id="chTitle"></h3>
+        <p id="chText"></p>
+        <p class="small" id="chWhile"></p>
+        <p class="timer" id="chTimer"></p>
+        <div class="choices" id="chChoices"></div>
+      </div>
+      <p class="small" id="challengeNone">No problems right now. Enjoy your teh tarik while it lasts.</p>
+
+      <div id="chEffectsWrap" hidden>
+        <h3>Active effects</h3>
+        <ul class="plain-list" id="chEffects"></ul>
+      </div>
+      <div id="chPeopleWrap" hidden>
+        <h3>Regular customers</h3>
+        <p class="small" id="chRahman"></p>
+      </div>
+      <div id="chRecentWrap" hidden>
+        <h3>Recent decisions</h3>
+        <ul class="plain-list" id="chRecent"></ul>
+      </div>
+    </section>
+
+    <!-- 4. BUSINESS HEALTH (v0.2) -->
+    <section class="panel" id="businessPanel" hidden>
+      <h2>Business health</h2>
+      <div class="biz-stat" id="bizRep" hidden>
+        <div class="milestone-row"><span>Reputation</span><span id="bizRepValue"></span></div>
+        <progress id="bizRepBar" max="1" value="0.5"></progress>
+        <p class="small" id="bizRepEffect"></p>
+      </div>
+      <div class="biz-stat" id="bizHyg" hidden>
+        <div class="milestone-row"><span>Hygiene</span><span id="bizHygValue"></span></div>
+        <progress id="bizHygBar" max="1" value="0.5"></progress>
+        <p class="small" id="bizHygEffect"></p>
+        <div class="biz-actions">
+          <button type="button" class="action" data-action="quickWipe" id="act-quickWipe" hidden></button>
+          <button type="button" class="action" data-action="deepClean" id="act-deepClean" hidden></button>
+        </div>
+      </div>
+      <div class="biz-stat" id="bizMor" hidden>
+        <div class="milestone-row"><span>Staff morale</span><span id="bizMorValue"></span></div>
+        <progress id="bizMorBar" max="1" value="0.5"></progress>
+        <p class="small" id="bizMorEffect"></p>
+        <div class="biz-actions">
+          <button type="button" class="action" data-action="staffTreat" id="act-staffTreat" hidden></button>
+        </div>
+      </div>
+      <div class="biz-stat" id="bizFlour" hidden>
+        <div class="milestone-row"><span>Flour stock</span><span id="bizFlourValue"></span></div>
+        <progress id="bizFlourBar" max="1" value="0"></progress>
+        <p class="small" id="bizFlourEffect"></p>
+        <div class="biz-actions">
+          <button type="button" class="action" data-action="orderFlour" id="act-orderFlour" hidden></button>
+          <button type="button" class="action" data-action="emergencyFlour" id="act-emergencyFlour" hidden></button>
+          <button type="button" class="action" data-action="kakRos" id="act-kakRos" hidden></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. UPGRADES -->
     <section class="panel game-only" id="upgradesPanel" hidden>
       <h2>Upgrades</h2>
       <div class="upgrade" id="upg-rotiMan" hidden>
@@ -81,7 +147,7 @@
       </div>
     </section>
 
-    <!-- 4. MILESTONES -->
+    <!-- 6. MILESTONES -->
     <section class="panel game-only" id="milestonesPanel" hidden>
       <h2>Milestones — Stage 1</h2>
       <p class="small">Reach all three goals to open a proper restaurant.</p>
@@ -109,7 +175,7 @@
       <p class="coming">Stage 2 — <strong>The Restaurant</strong> — is coming in the next update. Your progress is saved.</p>
     </section>
 
-    <!-- 5. EVENT LOG -->
+    <!-- 7. EVENT LOG -->
     <section class="panel" id="logPanel">
       <h2>Event log</h2>
       <ul class="log" id="eventLog"></ul>
@@ -135,12 +201,22 @@
           <button type="button" data-dev="cash1000">Add RM1,000</button>
           <button type="button" data-dev="roti100">Add 100 roti sold</button>
           <button type="button" data-dev="skip60">Skip 60 seconds</button>
+          <button type="button" data-dev="flour100">Add 100 flour</button>
+          <button type="button" data-dev="statsDown">Lower all stats by 30</button>
           <button type="button" class="danger" data-dev="reset">Reset progress</button>
+        </div>
+        <p class="small">Challenges</p>
+        <div class="dev-buttons">
+          <select id="devEventSelect" aria-label="Challenge to trigger"></select>
+          <button type="button" data-dev="eventTrigger">Trigger challenge</button>
+          <button type="button" data-dev="eventEnd">Clear current challenge</button>
+          <button type="button" data-dev="eventPause" id="devPauseEvents">Pause random challenges</button>
         </div>
       </details>
     </section>
   </main>
 
   <script src="game.js"></script>
+  <script src="events.js"></script>
 </body>
 </html>
