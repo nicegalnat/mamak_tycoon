@@ -355,3 +355,5 @@ body.stage-complete .game-only { display: none !important; }
   font: inherit;
 }
 body.stage-complete #businessPanel { display: none !important; }
+.dev-warning { color: var(--danger); font-weight: 600; }
+#newStallButton { margin-top: 4px; }

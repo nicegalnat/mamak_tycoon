@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mamak Tycoon</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=0.2.1">
 </head>
 <body>
   <header class="site-header">
@@ -173,6 +173,8 @@
       <h3>Your stall’s final numbers</h3>
       <dl class="stats" id="victoryStats"></dl>
       <p class="coming">Stage 2 — <strong>The Restaurant</strong> — is coming in the next update. Your progress is saved.</p>
+      <p class="small">New in v0.2: challenges, the Rahman Family and business health. Start a new stall to play Stage 1 again with them.</p>
+      <button type="button" class="buy" id="newStallButton">Start a new stall</button>
     </section>
 
     <!-- 7. EVENT LOG -->
@@ -184,6 +186,7 @@
     <!-- SAVE / RESET -->
     <section class="panel footer-panel">
       <p class="small" id="saveStatus">Not saved yet</p>
+      <p class="small" id="versionLabel">Mamak Tycoon v0.2.1</p>
       <button type="button" class="danger" id="resetButton">Reset Game</button>
       <div class="confirm-box" id="resetConfirm" hidden>
         <p><strong>Delete all progress?</strong> This cannot be undone.</p>
@@ -196,6 +199,7 @@
       <details class="dev" id="devPanel">
         <summary>Developer panel (for testing)</summary>
         <p class="small">Cheats for testing. Added cash does not count as revenue.</p>
+        <p class="small dev-warning" id="devCompleteNote" hidden>Stage 1 is complete, so the game is paused and these buttons have no visible effect. Tap "Start a new stall" (or Reset Game) to test again.</p>
         <div class="dev-buttons">
           <button type="button" data-dev="cash100">Add RM100</button>
           <button type="button" data-dev="cash1000">Add RM1,000</button>
@@ -216,7 +220,7 @@
     </section>
   </main>
 
-  <script src="game.js"></script>
-  <script src="events.js"></script>
+  <script src="game.js?v=0.2.1"></script>
+  <script src="events.js?v=0.2.1"></script>
 </body>
 </html>

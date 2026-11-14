@@ -1057,6 +1057,7 @@ function devEventAction(action) {
   const E = state.events;
   switch (action) {
     case 'eventTrigger': {
+      if (state.stage1Complete) return true;   // game is paused on the victory screen
       const id = el('devEventSelect').value;
       if (E.active) E.active = null;
       startEvent(id);
