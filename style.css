@@ -15,7 +15,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #1d1915;
     --panel: #26211c;
     --text: #f1e9de;
@@ -29,6 +30,20 @@
     --disabled-text: #7d7369;
   }
 }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1d1915;
+  --panel: #26211c;
+  --text: #f1e9de;
+  --muted: #b3a797;
+  --border: #3d352d;
+  --accent: #d08a5a;
+  --accent-text: #1d1915;
+  --good: #81c784;
+  --danger: #ef7a72;
+  --disabled-bg: #332c25;
+  --disabled-text: #7d7369;
+}
 
 * { box-sizing: border-box; }
 
@@ -36,7 +51,9 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  padding: 16px;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -207,6 +224,23 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
   background: transparent;
   color: var(--danger);
 }
+.danger.solid { background: var(--danger); color: var(--panel); }
+.confirm-box {
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.confirm-box p { margin: 0 0 8px; }
+.confirm-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.plain {
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+}
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .dev summary { cursor: pointer; color: var(--muted); padding: 6px 0; }
 .dev-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
 .dev-buttons button {

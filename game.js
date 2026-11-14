@@ -403,10 +403,19 @@ function loadGame() {
   return true;
 }
 
-function resetGame(askFirst = true) {
-  if (askFirst && !window.confirm('Reset Mamak Tycoon?\n\nAll your progress will be deleted. This cannot be undone.')) {
-    return false;
-  }
+// Shows the in-page "Are you sure?" box. (Pop-up confirm() dialogs are
+// blocked in some previews, so the confirmation is built into the page.)
+function requestReset() {
+  el('resetConfirm').hidden = false;
+  el('resetConfirm').scrollIntoView({ block: 'center' });
+}
+
+function cancelReset() {
+  el('resetConfirm').hidden = true;
+}
+
+function resetGame() {
+  cancelReset();
   try { localStorage.removeItem(CONFIG.saveKey); } catch (e) { /* ignore */ }
   state = newState();
   lastSavedAt = null;
@@ -632,7 +641,7 @@ function devAction(action) {
       state.playTimeMs += 60000;
       addLog('[Dev] Skipped 60 seconds.');
       break;
-    case 'reset': resetGame(true); return;
+    case 'reset': requestReset(); return;
     default: return;
   }
   afterChange();
@@ -668,7 +677,9 @@ function start() {
     btn.addEventListener('click', () => devAction(btn.dataset.dev));
   });
 
-  el('resetButton').addEventListener('click', () => resetGame(true));
+  el('resetButton').addEventListener('click', requestReset);
+  el('resetYes').addEventListener('click', () => resetGame());
+  el('resetNo').addEventListener('click', cancelReset);
 
   // Main loop. Pauses while the tab is hidden (no offline earnings).
   let last = performance.now();
@@ -699,7 +710,7 @@ function start() {
 // Handy for testing in the browser console: MamakGame.state, MamakGame.tick(10) ...
 window.MamakGame = {
   get state() { return state; },
-  CONFIG, tick, buy, makeRoti, upgradeCost, saveGame, loadGame, resetGame,
+  CONFIG, tick, buy, makeRoti, upgradeCost, saveGame, loadGame, resetGame, requestReset,
   productionCapacity, customerDemand, autoSalesRate, profitPerRoti, sellingPrice,
   render,
 };

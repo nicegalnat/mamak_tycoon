@@ -119,6 +119,13 @@
     <section class="panel footer-panel">
       <p class="small" id="saveStatus">Not saved yet</p>
       <button type="button" class="danger" id="resetButton">Reset Game</button>
+      <div class="confirm-box" id="resetConfirm" hidden>
+        <p><strong>Delete all progress?</strong> This cannot be undone.</p>
+        <div class="confirm-buttons">
+          <button type="button" class="danger solid" id="resetYes">Yes, reset everything</button>
+          <button type="button" class="plain" id="resetNo">Cancel</button>
+        </div>
+      </div>
 
       <details class="dev" id="devPanel">
         <summary>Developer panel (for testing)</summary>
