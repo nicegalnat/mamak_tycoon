@@ -133,9 +133,9 @@ hidden in a later version.
 Mamak Tycoon is a **text-based** game styled like a modern take on an
 old-school nasi kandar / mamak menu:
 
-- a maroon menu masthead with **MAMAK TYCOON** and a ten-stage progress strip
-- cream "laminated" menu cards with maroon category headers (bilingual: *Dapur · Production*, *Kira-Kira · Business*, *Notis · Challenges*…)
-- dotted price leaders, with RM prices on maroon-and-mustard price tags
+- a dark blue page with a yellow menu masthead, **MAMAK TYCOON** and a ten-stage progress strip
+- cream "laminated" menu cards with yellow category headers (bilingual: *Dapur · Production*, *Kira-Kira · Business*, *Notis · Challenges*…)
+- dotted price leaders, with RM prices on yellow price tags
 - surprise challenges on yellow **order slips** with a rubber-stamp label
 - the event log printed like a **receipt**
 - a light paper grain generated in CSS (no image files)

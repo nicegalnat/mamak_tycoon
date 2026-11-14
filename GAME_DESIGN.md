@@ -323,8 +323,8 @@ printed-paper texture. It doesn't imitate any real restaurant's logo or menu.
 ## Palette
 | Role | Colour |
 |---|---|
-| Maroon (branding, headers, prices) | `#8B2525` (dark `#641A1A`) |
-| Mustard (highlights, price text, stamps) | `#E7B83D` |
+| Dark blue (page background, text on yellow, accents) | `#13284A` (deep `#0B1A33`) |
+| Yellow (masthead, headers, main button, price tags) | `#F7CB3A` |
 | Cream / aged paper (backgrounds, cards) | `#F5E8C8` / `#FBF3DD` |
 | Dark green (positive stats, progress, selected) | `#285A3B` |
 | Dark brown ink (body text) | `#30251C` |
@@ -341,11 +341,11 @@ loaded from Google Fonts with system fallbacks.
 ## Components
 | Game element | Menu treatment |
 |---|---|
-| Header | Maroon masthead with a mustard inner rule, kicker line, stage chip and a 10-dot progress strip |
-| Panels | Cream cards with a maroon category strip and a bilingual label (Dapur, Kira-Kira, Notis, Menu Naik Taraf, Sasaran, Resit, Kesihatan Kedai) |
-| Stats | Dotted price leaders, with figures in maroon Oswald |
-| Upgrades / purchases | Menu items with maroon price tags in mustard text |
-| Main action | A large maroon button with a mustard inner border |
+| Header | Yellow masthead with a dark blue inner rule, kicker line, stage chip and a 10-dot progress strip |
+| Panels | Cream cards framed in yellow, with a yellow category strip and a bilingual label (Dapur, Kira-Kira, Notis, Menu Naik Taraf, Sasaran, Resit, Kesihatan Kedai) |
+| Stats | Dotted price leaders, with figures in dark blue Oswald |
+| Upgrades / purchases | Menu items with yellow price tags in dark blue text |
+| Main action | A large yellow button with a dark blue inner border |
 | Challenges | A yellow ruled order slip with a perforated top, a rubber-stamp tier label and choice "menu lines" |
 | Event log | A receipt (monospace, dashed separators) |
 | Stage complete / victory / ending | A green "special of the day" card with a mustard banner |

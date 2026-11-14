@@ -1,8 +1,8 @@
 /* =====================================================================
    MAMAK TYCOON — "Menu Edition" styles
    A modern take on an old-school nasi kandar / mamak menu:
-   maroon headers, mustard prices, cream laminated cards, dark-green
-   accents, a little paper grain and printed-ink personality.
+   dark blue page, yellow headers and price tags, cream laminated cards,
+   dark-green accents, a little paper grain and printed-ink personality.
 
    Fonts (Google Fonts, SIL Open Font License — free for commercial use):
      Alfa Slab One — the big MAMAK TYCOON masthead
@@ -15,9 +15,12 @@
   color-scheme: light;
 
   /* palette */
-  --maroon: #8b2525;
-  --maroon-dark: #641a1a;
-  --maroon-ink: #4a1212;
+  /* v1.2.1: dark blue + yellow (replaces the maroon) */
+  --navy: #13284a;          /* page background, text on yellow, accents on cream */
+  --navy-deep: #0b1a33;
+  --navy-soft: #24406e;
+  --yellow: #f7cb3a;        /* headers, masthead, main button, price tags */
+  --yellow-deep: #c99a12;   /* yellow shadows & edges */
   --mustard: #e7b83d;
   --mustard-soft: #f2d27a;
   --mustard-dark: #b8891c;
@@ -37,10 +40,10 @@
   --panel: var(--paper);
   --text: var(--ink);
   --border: var(--line);
-  --accent: var(--maroon);
-  --accent-text: var(--cream);
+  --accent: var(--navy);
+  --accent-text: var(--navy);
   --good: var(--green);
-  --danger: var(--maroon);
+  --danger: var(--navy);
   --disabled-bg: #e6dcc4;
   --disabled-text: #9c8b74;
 
@@ -49,6 +52,9 @@
   --font-menu: 'Oswald', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
   --font-body: 'Source Sans 3', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-receipt: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* light grain for the dark blue page */
+  --grain-light: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.95  0 0 0 0 0.8  0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 
   /* paper grain: tiny SVG fractal noise, generated in CSS (original, no image files) */
   --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.25  0 0 0 0 0.18  0 0 0 0 0.1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
@@ -63,11 +69,12 @@ body {
   padding-block: 0 24px;
   padding-left: max(12px, env(safe-area-inset-left, 0px));
   padding-right: max(12px, env(safe-area-inset-right, 0px));
-  background-color: var(--cream);
+  background-color: var(--navy);
   background-image:
-    var(--grain),
-    radial-gradient(ellipse at 50% 0%, rgba(255, 250, 230, 0.7), transparent 60%),
-    radial-gradient(ellipse at 50% 120%, rgba(139, 37, 37, 0.10), transparent 55%);
+    var(--grain-light),
+    radial-gradient(ellipse at 50% 0%, rgba(80, 120, 190, 0.35), transparent 60%),
+    radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.35), transparent 55%);
+  background-attachment: fixed;
   background-size: 160px 160px, 100% 100%, 100% 100%;
   color: var(--ink);
   font-family: var(--font-body);
@@ -83,14 +90,14 @@ body {
   margin: 0 auto 14px;
   padding: 14px 16px 12px;
   text-align: center;
-  color: var(--cream);
-  background-color: var(--maroon);
+  color: var(--navy);
+  background-color: var(--yellow);
   background-image:
     var(--grain),
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 6px, transparent 6px 12px);
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0 6px, transparent 6px 12px);
   background-size: 160px 160px, auto;
   border-radius: 0 0 10px 10px;
-  box-shadow: inset 0 0 0 3px var(--maroon), inset 0 0 0 5px var(--mustard), 0 3px 0 var(--maroon-ink);
+  box-shadow: inset 0 0 0 3px var(--yellow), inset 0 0 0 5px var(--navy), 0 3px 0 var(--navy-deep);
 }
 .mast-kicker {
   display: flex;
@@ -103,9 +110,9 @@ body {
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--mustard-soft);
+  color: var(--navy-soft);
 }
-.mast-dot { color: var(--mustard); }
+.mast-dot { color: var(--navy); }
 .masthead h1 {
   margin: 0;
   font-family: var(--font-mast);
@@ -113,15 +120,15 @@ body {
   font-size: clamp(2rem, 7vw, 3.6rem);
   line-height: 1.05;
   letter-spacing: 0.04em;
-  color: var(--mustard);
-  text-shadow: 2px 2px 0 var(--maroon-ink), 4px 4px 0 rgba(0, 0, 0, 0.18);
+  color: var(--navy);
+  text-shadow: 2px 2px 0 var(--cream), 4px 4px 0 rgba(11, 26, 51, 0.25);
   text-wrap: balance;
 }
 .tagline {
   margin: 4px 0 8px;
   font-style: italic;
-  color: var(--cream);
-  opacity: 0.92;
+  color: var(--navy);
+  opacity: 0.9;
 }
 .mast-progress {
   display: flex;
@@ -135,13 +142,13 @@ body {
   margin: 0;
   padding: 3px 12px;
   border-radius: 999px;
-  background: var(--mustard);
-  color: var(--maroon-ink);
+  background: var(--navy);
+  color: var(--yellow);
   font-family: var(--font-menu);
   font-weight: 600;
   font-size: 0.92rem;
   letter-spacing: 0.02em;
-  box-shadow: 0 2px 0 var(--maroon-ink);
+  box-shadow: 0 2px 0 var(--navy-deep);
 }
 .stage-dots {
   display: flex;
@@ -156,15 +163,15 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 1.5px solid var(--mustard-soft);
+  border: 1.5px solid var(--navy);
   font-family: var(--font-menu);
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--mustard-soft);
+  color: var(--navy);
   font-variant-numeric: tabular-nums;
 }
 .stage-dots li.done { background: var(--green); border-color: var(--green); color: var(--cream); }
-.stage-dots li.current { background: var(--mustard); border-color: var(--mustard); color: var(--maroon-ink); }
+.stage-dots li.current { background: var(--navy); border-color: var(--navy); color: var(--yellow); }
 
 /* ---------------------------------------------------------------------
    LAYOUT — two menu pages side by side on wide screens
@@ -212,10 +219,10 @@ main {
 .panel {
   position: relative;
   background: var(--paper);
-  border: 2px solid var(--maroon);
+  border: 2px solid var(--yellow);
   border-radius: 8px;
   padding: 0 14px 14px;
-  box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line), 0 2px 0 rgba(74, 18, 18, 0.25);
+  box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line), 0 3px 0 rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
 /* printed-paper grain over each card (doesn't block taps) */
@@ -234,21 +241,21 @@ main {
 .panel > .sblock-title {
   margin: 0 -14px 12px;
   padding: 7px 14px 6px;
-  background: var(--maroon);
-  color: var(--cream);
+  background: var(--yellow);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-bottom: 3px solid var(--mustard);
+  border-bottom: 3px solid var(--navy);
   text-wrap: balance;
 }
 .h-malay {
-  color: var(--mustard);
+  color: var(--green);
   margin-right: 6px;
 }
-.h-malay::after { content: " ·"; color: var(--mustard-soft); }
+.h-malay::after { content: " ·"; color: var(--navy-soft); }
 .panel h3 {
   margin: 14px 0 6px;
   font-family: var(--font-menu);
@@ -256,13 +263,13 @@ main {
   font-size: 0.98rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--maroon);
+  color: var(--navy);
 }
 .panel > h2 + * { margin-top: 0; }
 
 .small { font-size: 0.88rem; color: var(--muted); margin: 4px 0; }
 .hint { margin: 8px 0 0; font-size: 0.92rem; font-weight: 600; color: var(--green); }
-.hint strong { color: var(--maroon); }
+.hint strong { color: var(--navy); }
 
 /* ---------------------------------------------------------------------
    STATS with dotted "price leaders"
@@ -295,7 +302,7 @@ main {
   font-family: var(--font-menu);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: var(--maroon);
+  color: var(--navy);
   text-align: right;
   white-space: nowrap;
 }
@@ -325,18 +332,18 @@ button:focus-visible, select:focus-visible, summary:focus-visible {
   padding: 10px 16px;
   border: none;
   border-radius: 10px;
-  background: var(--maroon);
-  color: var(--cream);
+  background: var(--yellow);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  box-shadow: inset 0 0 0 3px var(--maroon), inset 0 0 0 5px var(--mustard), 0 4px 0 var(--maroon-ink);
+  box-shadow: inset 0 0 0 3px var(--yellow), inset 0 0 0 5px var(--navy), 0 4px 0 var(--navy-deep);
   user-select: none;
   -webkit-user-select: none;
 }
-.make-button:active { transform: translateY(3px); box-shadow: inset 0 0 0 3px var(--maroon), inset 0 0 0 5px var(--mustard), 0 1px 0 var(--maroon-ink); }
+.make-button:active { transform: translateY(3px); box-shadow: inset 0 0 0 3px var(--yellow), inset 0 0 0 5px var(--navy), 0 1px 0 var(--navy-deep); }
 .make-button:disabled {
   background: var(--disabled-bg);
   color: var(--disabled-text);
@@ -363,15 +370,15 @@ button:focus-visible, select:focus-visible, summary:focus-visible {
   padding: 6px 14px;
   border: none;
   border-radius: 6px;
-  background: var(--maroon);
-  color: var(--mustard);
+  background: var(--yellow);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.02em;
-  box-shadow: 0 3px 0 var(--maroon-ink);
+  box-shadow: 0 3px 0 var(--navy), inset 0 0 0 1px var(--yellow-deep);
 }
-.buy:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--maroon-ink); }
+.buy:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--navy); }
 .buy:disabled {
   background: var(--disabled-bg);
   color: var(--disabled-text);
@@ -385,15 +392,15 @@ button:focus-visible, select:focus-visible, summary:focus-visible {
   justify-self: start;
   min-height: 44px;
   padding: 6px 14px;
-  border: 2px solid var(--maroon);
+  border: 2px solid var(--navy);
   border-radius: 6px;
   background: transparent;
-  color: var(--maroon);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 600;
   letter-spacing: 0.03em;
 }
-.danger.solid { background: var(--maroon); color: var(--cream); }
+.danger.solid { background: var(--navy); color: var(--yellow); }
 .plain {
   min-height: 44px;
   padding: 6px 14px;
@@ -458,10 +465,10 @@ progress::-webkit-progress-value { background: var(--green); border-radius: 999p
 progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 .milestone { margin: 10px 0; }
 .milestone-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.95rem; margin-bottom: 3px; }
-.milestone-row span:last-child { font-family: var(--font-menu); font-weight: 600; color: var(--maroon); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.milestone-row span:last-child { font-family: var(--font-menu); font-weight: 600; color: var(--navy); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .milestone.done .milestone-row span:first-child::before { content: "✔ "; color: var(--green); font-weight: 700; }
-.milestone.done progress::-webkit-progress-value { background: var(--mustard-dark); }
-.milestone.done progress::-moz-progress-bar { background: var(--mustard-dark); }
+.milestone.done progress::-webkit-progress-value { background: var(--yellow-deep); }
+.milestone.done progress::-moz-progress-bar { background: var(--yellow-deep); }
 
 .biz-stat { margin: 10px 0 14px; }
 .biz-stat .small { margin: 4px 0 6px; }
@@ -476,10 +483,10 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   margin: 0 0 10px;
   padding: 10px 12px;
   min-height: 44px;
-  border: 2px dashed var(--maroon);
+  border: 2px dashed var(--navy);
   border-radius: 6px;
   background: var(--slip);
-  color: var(--maroon);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -493,7 +500,7 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   background-image: repeating-linear-gradient(to bottom, transparent 0 23px, var(--slip-line) 23px 24px);
   border: 1px solid var(--line);
   border-radius: 2px;
-  box-shadow: 0 3px 0 rgba(74, 18, 18, 0.18);
+  box-shadow: 0 3px 0 rgba(11, 26, 51, 0.18);
   transform: rotate(-0.4deg);
 }
 /* perforated tear-off top edge */
@@ -527,9 +534,9 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   transform: rotate(-3deg);
   opacity: 0.9;
 }
-.tier[data-tier="medium"] { border-color: var(--mustard-dark); color: var(--mustard-dark); }
-.tier[data-tier="major"] { border-color: var(--maroon); color: var(--maroon); border-width: 3px; }
-.timer { font-size: 0.9rem; font-weight: 700; color: var(--maroon); }
+.tier[data-tier="medium"] { border-color: var(--yellow-deep); color: var(--yellow-deep); }
+.tier[data-tier="major"] { border-color: var(--navy); color: var(--navy); border-width: 3px; }
+.timer { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
 
 .choices { display: grid; gap: 8px; }
 .choice {
@@ -538,17 +545,17 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   width: 100%;
   min-height: 52px;
   padding: 9px 12px;
-  border: 2px solid var(--maroon);
+  border: 2px solid var(--navy);
   border-left-width: 6px;
   border-radius: 6px;
   background: var(--paper);
   color: var(--ink);
   text-align: left;
 }
-.choice:active { background: var(--mustard-soft); }
-.choice-label { font-family: var(--font-menu); font-weight: 600; font-size: 1.02rem; letter-spacing: 0.02em; color: var(--maroon); }
+.choice:active { background: #f7dc7e; }
+.choice-label { font-family: var(--font-menu); font-weight: 600; font-size: 1.02rem; letter-spacing: 0.02em; color: var(--navy); }
 .choice-detail { font-size: 0.88rem; color: var(--muted); }
-.choice-why { font-size: 0.85rem; color: var(--maroon); font-weight: 700; }
+.choice-why { font-size: 0.85rem; color: var(--navy); font-weight: 700; }
 .choice:disabled { border-color: var(--line); cursor: not-allowed; background: #f3ead2; }
 .choice:disabled .choice-label { color: var(--disabled-text); }
 .choice-why[hidden], .choice-detail[hidden] { display: none; }
@@ -573,7 +580,7 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 }
 .log li { padding: 4px 0; border-bottom: 1px dashed var(--line); }
 .log li:last-child { border-bottom: none; }
-.log .time { color: var(--maroon); font-weight: 700; font-variant-numeric: tabular-nums; margin-right: 8px; }
+.log .time { color: var(--navy); font-weight: 700; font-variant-numeric: tabular-nums; margin-right: 8px; }
 
 /* ---------------------------------------------------------------------
    SPECIAL OF THE DAY — stage complete, victory, ending
@@ -581,7 +588,7 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 .victory {
   text-align: center;
   border-color: var(--green);
-  box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 5px var(--mustard), 0 2px 0 rgba(40, 90, 59, 0.35);
+  box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 5px var(--yellow), 0 3px 0 rgba(0, 0, 0, 0.35);
 }
 .victory > h2 {
   font-family: var(--font-mast);
@@ -589,23 +596,23 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   font-size: 1.5rem;
   letter-spacing: 0.04em;
   background: var(--green);
-  color: var(--mustard);
-  border-bottom-color: var(--mustard);
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
 }
 .victory .quote { font-style: italic; font-size: 1.05rem; }
 .victory .banner {
   display: inline-block;
   margin: 6px auto 10px;
   padding: 6px 14px;
-  background: var(--mustard);
-  color: var(--maroon-ink);
+  background: var(--yellow);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border-radius: 4px;
   transform: rotate(-1deg);
-  box-shadow: 0 2px 0 var(--maroon-ink);
+  box-shadow: 0 2px 0 var(--navy);
 }
 .victory .stats { text-align: left; margin: 0 0 12px; }
 .victory .plain { margin-top: 8px; }
@@ -645,11 +652,11 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 }
 .cell-label { font-family: var(--font-menu); font-weight: 700; font-size: 1rem; letter-spacing: 0.04em; }
 .cell-sub { font-size: 0.72rem; color: var(--muted); overflow-wrap: anywhere; }
-.cell.own-you { background: var(--maroon); border-color: var(--maroon-ink); color: var(--mustard); }
-.cell.own-you .cell-sub { color: var(--cream); }
+.cell.own-you { background: var(--yellow); border-color: var(--navy); color: var(--navy); }
+.cell.own-you .cell-sub { color: var(--navy); }
 .cell.own-bk { border-color: var(--ink); background-image: repeating-linear-gradient(135deg, rgba(48, 37, 28, 0.08) 0 6px, transparent 6px 12px); }
 .cell.own-ks { border-color: var(--green); border-style: dashed; color: var(--green); }
-.cell.golden { box-shadow: inset 0 0 0 3px var(--mustard); }
+.cell.golden { box-shadow: inset 0 0 0 3px var(--yellow); }
 .cell.selected { outline: 3px solid var(--green); outline-offset: 2px; }
 
 /* rows (outlets, regions, policies, cities, species…) */
@@ -668,9 +675,9 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 .srow-info { flex: 1 1 220px; min-width: 0; }
 .srow-text { font-weight: 700; }
 .srow-sub { margin: 2px 0 0; }
-.srow.bad { border-left-color: var(--maroon); }
-.srow.bad .srow-sub { color: var(--maroon); font-weight: 600; }
-.srow.warn { border-left-color: var(--mustard-dark); }
+.srow.bad { border-left-color: var(--navy); }
+.srow.bad .srow-sub { color: var(--navy); font-weight: 600; }
+.srow.warn { border-left-color: var(--yellow-deep); }
 .srow.on { border-left-color: var(--green); }
 .srow-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
 .mini {
@@ -678,15 +685,15 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   min-height: 44px;
   min-width: 44px;
   padding: 4px 10px;
-  border: 2px solid var(--maroon);
+  border: 2px solid var(--navy);
   border-radius: 6px;
   background: var(--paper);
-  color: var(--maroon);
+  color: var(--navy);
   font-family: var(--font-menu);
   font-weight: 600;
   text-align: center;
 }
-.mini:active { background: var(--mustard-soft); }
+.mini:active { background: #f7dc7e; }
 .mini .choice-label { color: inherit; font-size: 0.95rem; }
 .mini .choice-detail, .mini .choice-why { font-size: 0.75rem; font-family: var(--font-body); }
 .mini:disabled { border-color: var(--line); color: var(--disabled-text); cursor: not-allowed; }
@@ -696,7 +703,7 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
    --------------------------------------------------------------------- */
 .footer-panel { display: grid; gap: 10px; padding-top: 14px; }
 .confirm-box {
-  border: 2px solid var(--maroon);
+  border: 2px solid var(--navy);
   border-radius: 6px;
   padding: 10px 12px;
   background: var(--slip);
@@ -715,8 +722,8 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   color: var(--ink);
   font: inherit;
 }
-.dev-buttons button.danger { border-color: var(--maroon); color: var(--maroon); }
-.dev-warning { color: var(--maroon); font-weight: 600; }
+.dev-buttons button.danger { border-color: var(--navy); color: var(--navy); }
+.dev-warning { color: var(--navy); font-weight: 600; }
 
 /* ---------------------------------------------------------------------
    STATE RULES used by the game's scripts
@@ -765,7 +772,7 @@ body.later-stage #victoryPanel { display: none !important; }
   font-size: 1.05rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-bottom: 3px solid var(--mustard);
+  border-bottom: 3px solid var(--yellow);
   min-height: 44px;
   display: flex;
   align-items: center;
@@ -773,7 +780,7 @@ body.later-stage #victoryPanel { display: none !important; }
   gap: 10px;
 }
 .stage-intro > summary::-webkit-details-marker { display: none; }
-.stage-intro > summary::after { content: "Read ▾"; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--mustard); white-space: nowrap; }
+.stage-intro > summary::after { content: "Read ▾"; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--yellow); white-space: nowrap; }
 .stage-intro[open] > summary::after { content: "Hide ▴"; }
 .stage-intro[open] { padding-bottom: 14px; }
 .stage-intro[open] > p { margin-top: 12px; }
