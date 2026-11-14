@@ -4,16 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mamak Tycoon</title>
-  <link rel="stylesheet" href="style.css?v=0.2.1">
+  <link rel="stylesheet" href="style.css?v=1.0.0">
 </head>
 <body>
   <header class="site-header">
     <h1>MAMAK TYCOON</h1>
     <p class="tagline">From one roti to world domination.</p>
-    <p class="stage" id="stageLabel">Stage 1 — The Roadside Stall</p>
+    <p class="stage" id="stageLabel">Stage 1 of 10 — I Am the Mamak Owner</p>
   </header>
 
   <main>
+    <!-- STAGES 2–10 (stages.js) -->
+    <div id="stageArea" hidden>
+      <section class="panel stage-intro" id="stageIntro">
+        <h2 id="stageIntroTitle"></h2>
+        <p id="stageIntroText"></p>
+      </section>
+      <button type="button" class="challenge-alert" id="stageAlert" hidden></button>
+      <div id="stageBlocks"></div>
+      <section class="panel victory" id="transitionPanel" hidden>
+        <h2 id="transitionTitle"></h2>
+        <p class="quote" id="transitionText"></p>
+        <p class="small" id="transitionStats"></p>
+        <p class="banner" id="transitionNext"></p>
+        <button type="button" class="buy big" id="continueButton">Continue →</button>
+      </section>
+      <section class="panel victory" id="endingPanel" hidden>
+        <h2>OPEN 24 JAM, FOREVER</h2>
+        <p class="quote">From one roti canai at a folding table to every star in the sky. The universe is fed. The teh tarik is pulled. The kuah, at last, is banjir everywhere.</p>
+        <p id="endingRahman"></p>
+        <p class="banner">THE END — Terima kasih, boss.</p>
+        <h3>Your empire</h3>
+        <dl class="stats" id="endingStats"></dl>
+        <p class="small">Mamak Tycoon is a work of fiction. All organisations, laws, characters and ministries are made up. No real roti were harmed (many were eaten).</p>
+        <button type="button" class="buy" id="playAgainButton">Play again from Stage 1</button>
+      </section>
+    </div>
+
     <!-- 1. STATISTICS -->
     <section class="panel" id="statsPanel">
       <h2>Business</h2>
@@ -172,9 +199,9 @@
       <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
       <h3>Your stall’s final numbers</h3>
       <dl class="stats" id="victoryStats"></dl>
-      <p class="coming">Stage 2 — <strong>The Restaurant</strong> — is coming in the next update. Your progress is saved.</p>
-      <p class="small">New in v0.2: challenges, the Rahman Family and business health. Start a new stall to play Stage 1 again with them.</p>
-      <button type="button" class="buy" id="newStallButton">Start a new stall</button>
+      <p class="coming">Next: open more outlets and build a franchise. Nine more stages to go — it only gets sillier from here.</p>
+      <button type="button" class="buy big" id="continueStage2">Continue to Stage 2: New Franchise, Who Dis? →</button>
+      <button type="button" class="plain" id="newStallButton">Restart from the beginning</button>
     </section>
 
     <!-- 7. EVENT LOG -->
@@ -186,7 +213,7 @@
     <!-- SAVE / RESET -->
     <section class="panel footer-panel">
       <p class="small" id="saveStatus">Not saved yet</p>
-      <p class="small" id="versionLabel">Mamak Tycoon v0.2.1</p>
+      <p class="small" id="versionLabel">Mamak Tycoon v1.0 — 10 stages</p>
       <button type="button" class="danger" id="resetButton">Reset Game</button>
       <div class="confirm-box" id="resetConfirm" hidden>
         <p><strong>Delete all progress?</strong> This cannot be undone.</p>
@@ -216,11 +243,20 @@
           <button type="button" data-dev="eventEnd">Clear current challenge</button>
           <button type="button" data-dev="eventPause" id="devPauseEvents">Pause random challenges</button>
         </div>
+        <p class="small">Stages</p>
+        <div class="dev-buttons">
+          <select id="devStageSelect" aria-label="Stage to jump to"></select>
+          <button type="button" data-dev="jumpStage">Jump to stage</button>
+          <button type="button" data-dev="completeStage">Complete current stage</button>
+          <button type="button" data-dev="cashBig">Add 60s of income</button>
+        </div>
       </details>
     </section>
   </main>
 
-  <script src="game.js?v=0.2.1"></script>
-  <script src="events.js?v=0.2.1"></script>
+  <script src="game.js?v=1.0.0"></script>
+  <script src="events.js?v=1.0.0"></script>
+  <script src="stages.js?v=1.0.0"></script>
+  <script src="stage-events.js?v=1.0.0"></script>
 </body>
 </html>

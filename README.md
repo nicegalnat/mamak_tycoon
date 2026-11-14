@@ -2,13 +2,34 @@
 
 *From one roti to world domination.*
 
-A browser-based incremental game, inspired by the slow-reveal style of
-Universal Paperclips. You start with a tiny roadside mamak stall in Malaysia,
-flipping roti canai by hand, and grow it into an empire.
+A browser-based incremental game, inspired by the escalating, slow-reveal
+style of Universal Paperclips. You start at a folding table by the roadside,
+flipping roti canai by hand. Ten stages later you are serving teh tarik to
+alien civilisations at the edge of the universe.
 
-**Current version: v0.2, Stage 1 (The Roadside Stall) + Challenges & Events**
+**Current version: v1.0. All 10 stages are playable from start to finish, with a definite ending.**
+A full game takes roughly 60–90 minutes.
 
-## How to play
+## The ten stages
+
+| # | Stage | What's new |
+|---|---|---|
+| 1 | I Am the Mamak Owner | Make roti by hand, hire Roti Men, manage stock, hygiene and morale |
+| 2 | New Franchise, Who Dis? | Run several outlets: locations, staffing, a central kitchen, menu items. Some outlets can lose money |
+| 3 | Mamak District Takeover | A territory map. Open, defend and win blocks from two rival chains that fight back |
+| 4 | Satu Malaysia, Satu Mamak | Nationwide logistics. Assign lorries and cargo planes to regions and match regional tastes |
+| 5 | Akta Sarapan Wajib 24 Jam | Plan daily breakfast quotas from forecasts and stamp fictional forms before their deadlines |
+| 6 | Prime Mamak Minister | Switch national food policies on and off to balance the Dhal Reserve, approval and the treasury |
+| 7 | Hari Mamak Sedunia (Tapi Malaysia Dulu) | Plan a festival against a countdown, keep hype up, and play a synchronised roti-flip rhythm game |
+| 8 | Mamak Goes International | Adapt recipes to each city using customer feedback, and cover all 24 supper hours worldwide |
+| 9 | The Great Roti Singularity | Split AI compute between production, self-improvement and quality, and keep the AI under oversight |
+| 10 | Mamakverse: Open 24 Jam, Forever | Launch roti probes, build warp lanes with Dark Dhal, and learn what each alien species wants |
+
+Each stage ends with a summary screen and a **Continue** button to the next.
+The Rahman Family turn up in every stage and remember how you treated them,
+all the way to the final scene. Everything in the game is fictional.
+
+## How to play Stage 1
 
 1. Tap **Make & Sell Roti Canai**. Each tap sells one roti for RM1 profit.
 2. Once you have some cash, new options appear. Hire a **Roti Man** to make
@@ -57,7 +78,9 @@ but it can't stop you finishing the stage.
 | `index.html` | The page layout (what you see) |
 | `style.css` | Colours, sizes and layout |
 | `game.js` | Core game rules: money, roti, upgrades, business stats, saving. **Core numbers are in the `CONFIG` block at the top.** |
-| `events.js` | The Challenges & Events system and every event's story. **Event chances, cooldowns and costs are in `EVENT_CONFIG` at the top.** |
+| `events.js` | The Challenges & Events engine and the Stage 1 events. **Event chances, cooldowns and costs are in `EVENT_CONFIG` at the top.** |
+| `stages.js` | Stages 2–10: each stage's rules, numbers, screens and goals, plus stage transitions and the ending. **Each stage's numbers are in a block named `S2`, `S3`… near its section.** |
+| `stage-events.js` | Surprise challenges, Rahman Family visits and story events for Stages 2–10 |
 | `GAME_DESIGN.md` | The design plan: stages, formulas, pacing |
 | `README.md` | This file |
 
@@ -98,15 +121,20 @@ At the bottom of the page there is a collapsible **Developer panel** with
 testing shortcuts:
 - add cash, add roti sold, add flour, skip 60 seconds
 - lower all stats by 30 (to test recovery)
-- **trigger any challenge** from a list, clear the current challenge, or pause random challenges
+- **trigger any challenge** from a list (the name starts with its stage, e.g. "S6:"), clear the current challenge, or pause random challenges
+- **jump to any stage**, complete the current stage instantly, or add 60 seconds of income
 - reset
 
 Cash added this way does not count as revenue. The panel will be removed or
 hidden in a later version.
 
-## Roadmap
+## Version history
 
-- **Stage 1: The Roadside Stall** (done)
-- **v0.2: Challenges & Events** (done): Rahman Family, Tikus!, Tepung Habis, DBKL permit, health inspection, and 9 smaller challenges
-- **Stage 2: The Restaurant**: 24-hour operation, menu, reputation
-- **Stage 3: The Empire**: franchises, supply chains, and a defined ending
+- **v0.1**: Stage 1, the roadside stall
+- **v0.2**: Challenges & Events. The Rahman Family, Tikus!, Tepung Habis, a licence deadline, the health inspection, and business health stats
+- **v1.0**: all 10 stages, 40+ new challenges, a Rahman visit in every stage, a finale and an ending
+
+## Ideas for later
+- Pixel-art graphics
+- A New Game+ mode with a prestige bonus ("pass the stall to your children")
+- Sound effects (the satisfying slap of dough on a griddle)
