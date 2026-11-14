@@ -4,30 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mamak Tycoon</title>
-  <link rel="stylesheet" href="style.css?v=1.1.0">
+  <meta name="theme-color" content="#8B2525">
+  <!-- Fonts: Alfa Slab One, Oswald, Source Sans 3 — all SIL Open Font License (free for commercial use) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css?v=1.2.0">
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header masthead">
+    <p class="mast-kicker"><span>Restoran</span><span class="mast-dot">•</span><span>Buka 24 Jam</span><span class="mast-dot">•</span><span>Since Today</span></p>
     <h1>MAMAK TYCOON</h1>
     <p class="tagline">From one roti to world domination.</p>
-    <p class="stage" id="stageLabel">Stage 1 of 10 — I Am the Mamak Owner</p>
+    <div class="mast-progress">
+      <p class="stage" id="stageLabel">Stage 1 of 10 — I Am the Mamak Owner</p>
+      <ol class="stage-dots" id="stageDots" aria-label="Progress through the 10 stages"></ol>
+    </div>
   </header>
 
   <main>
-    <!-- PIXEL-ART SCENE (scene.js) -->
-    <div id="sceneColumn">
-      <section class="scene-panel" id="scenePanel" aria-label="Your mamak stall">
-        <div class="scene-frame"><canvas id="sceneCanvas" width="256" height="144" role="img" aria-label="Your mamak stall"></canvas></div>
-        <p class="scene-caption" id="sceneCaption" aria-live="polite"></p>
-      </section>
-    </div>
-
     <!-- STAGES 2–10 (stages.js) -->
     <div id="stageArea" hidden>
-      <section class="panel stage-intro" id="stageIntro">
-        <h2 id="stageIntroTitle"></h2>
+      <details class="panel stage-intro" id="stageIntro" open>
+        <summary id="stageIntroTitle"></summary>
         <p id="stageIntroText"></p>
-      </section>
+      </details>
       <button type="button" class="challenge-alert" id="stageAlert" hidden></button>
       <div id="stageBlocks"></div>
       <section class="panel victory" id="transitionPanel" hidden>
@@ -49,24 +50,10 @@
       </section>
     </div>
 
-    <!-- 1. STATISTICS -->
-    <section class="panel" id="statsPanel">
-      <h2>Business</h2>
-      <dl class="stats">
-        <div><dt>Cash</dt><dd id="statCash">RM0.00</dd></div>
-        <div><dt>Roti sold</dt><dd id="statRoti">0</dd></div>
-        <div><dt>Profit per roti</dt><dd id="statProfit">RM1.00</dd></div>
-        <div><dt>Employees</dt><dd id="statEmployees">0</dd></div>
-        <div><dt>Production rate</dt><dd id="statRate">0 roti/sec</dd></div>
-        <div><dt>Lifetime revenue</dt><dd id="statRevenue">RM0.00</dd></div>
-        <div><dt>Net profit</dt><dd id="statNet">RM0.00</dd></div>
-        <div><dt>Play time</dt><dd id="statTime">0:00</dd></div>
-      </dl>
-    </section>
-
+    <div class="col col-a">
     <!-- 2. PRODUCTION -->
     <section class="panel game-only" id="productionPanel">
-      <h2>Production</h2>
+      <h2><span class="h-malay">Dapur</span> Production</h2>
       <button type="button" class="challenge-alert" id="challengeAlert" hidden></button>
       <button type="button" class="make-button" id="makeButton">Make &amp; Sell Roti Canai</button>
       <p class="feedback" id="clickFeedback" aria-live="polite">&nbsp;</p>
@@ -87,7 +74,7 @@
 
     <!-- 3. CHALLENGES (v0.2) -->
     <section class="panel game-only" id="challengesPanel" hidden>
-      <h2>Challenges</h2>
+      <h2><span class="h-malay">Notis</span> Challenges</h2>
       <div id="challengeActive" class="challenge" hidden>
         <p class="tier" id="chTier" data-tier="small"></p>
         <h3 id="chTitle"></h3>
@@ -112,9 +99,21 @@
       </div>
     </section>
 
+    <!-- STAGE 1 VICTORY -->
+    <section class="panel victory" id="victoryPanel" hidden>
+      <h2>CONGRATULATIONS, BOSS!</h2>
+      <p class="quote">“Your roadside stall has become the neighbourhood’s favourite mamak. Time to buka kedai!”</p>
+      <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
+      <h3>Your stall’s final numbers</h3>
+      <dl class="stats" id="victoryStats"></dl>
+      <p class="coming">Next: open more outlets and build a franchise. Nine more stages to go — it only gets sillier from here.</p>
+      <button type="button" class="buy big" id="continueStage2">Continue to Stage 2: New Franchise, Who Dis? →</button>
+      <button type="button" class="plain" id="newStallButton">Restart from the beginning</button>
+    </section>
+
     <!-- 4. BUSINESS HEALTH (v0.2) -->
     <section class="panel" id="businessPanel" hidden>
-      <h2>Business health</h2>
+      <h2><span class="h-malay">Kesihatan Kedai</span> Business health</h2>
       <div class="biz-stat" id="bizRep" hidden>
         <div class="milestone-row"><span>Reputation</span><span id="bizRepValue"></span></div>
         <progress id="bizRepBar" max="1" value="0.5"></progress>
@@ -149,9 +148,33 @@
       </div>
     </section>
 
+    <!-- 7. EVENT LOG -->
+    <section class="panel" id="logPanel">
+      <h2><span class="h-malay">Resit</span> Event log</h2>
+      <ul class="log" id="eventLog"></ul>
+    </section>
+
+    </div>
+
+    <div class="col col-b">
+    <!-- 1. STATISTICS -->
+    <section class="panel" id="statsPanel">
+      <h2><span class="h-malay">Kira-Kira</span> Business</h2>
+      <dl class="stats">
+        <div><dt>Cash</dt><dd id="statCash">RM0.00</dd></div>
+        <div><dt>Roti sold</dt><dd id="statRoti">0</dd></div>
+        <div><dt>Profit per roti</dt><dd id="statProfit">RM1.00</dd></div>
+        <div><dt>Employees</dt><dd id="statEmployees">0</dd></div>
+        <div><dt>Production rate</dt><dd id="statRate">0 roti/sec</dd></div>
+        <div><dt>Lifetime revenue</dt><dd id="statRevenue">RM0.00</dd></div>
+        <div><dt>Net profit</dt><dd id="statNet">RM0.00</dd></div>
+        <div><dt>Play time</dt><dd id="statTime">0:00</dd></div>
+      </dl>
+    </section>
+
     <!-- 5. UPGRADES -->
     <section class="panel game-only" id="upgradesPanel" hidden>
-      <h2>Upgrades</h2>
+      <h2><span class="h-malay">Menu Naik Taraf</span> Upgrades</h2>
       <div class="upgrade" id="upg-rotiMan" hidden>
         <div class="upgrade-info">
           <h3>Hire Roti Man <span class="level" id="lvl-rotiMan"></span></h3>
@@ -184,7 +207,7 @@
 
     <!-- 6. MILESTONES -->
     <section class="panel game-only" id="milestonesPanel" hidden>
-      <h2>Milestones — Stage 1</h2>
+      <h2><span class="h-malay">Sasaran</span> Milestones — Stage 1</h2>
       <p class="small">Reach all three goals to open a proper restaurant.</p>
       <div class="milestone">
         <div class="milestone-row"><span>Sell 500 roti</span><span id="msRotiText">0 / 500</span></div>
@@ -200,28 +223,10 @@
       </div>
     </section>
 
-    <!-- STAGE 1 VICTORY -->
-    <section class="panel victory" id="victoryPanel" hidden>
-      <h2>CONGRATULATIONS, BOSS!</h2>
-      <p class="quote">“Your roadside stall has become the neighbourhood’s favourite mamak. Time to buka kedai!”</p>
-      <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
-      <h3>Your stall’s final numbers</h3>
-      <dl class="stats" id="victoryStats"></dl>
-      <p class="coming">Next: open more outlets and build a franchise. Nine more stages to go — it only gets sillier from here.</p>
-      <button type="button" class="buy big" id="continueStage2">Continue to Stage 2: New Franchise, Who Dis? →</button>
-      <button type="button" class="plain" id="newStallButton">Restart from the beginning</button>
-    </section>
-
-    <!-- 7. EVENT LOG -->
-    <section class="panel" id="logPanel">
-      <h2>Event log</h2>
-      <ul class="log" id="eventLog"></ul>
-    </section>
-
     <!-- SAVE / RESET -->
     <section class="panel footer-panel">
       <p class="small" id="saveStatus">Not saved yet</p>
-      <p class="small" id="versionLabel">Mamak Tycoon v1.1 — pixel art (Stage 1)</p>
+      <p class="small" id="versionLabel">Mamak Tycoon v1.2 — menu edition</p>
       <button type="button" class="danger" id="resetButton">Reset Game</button>
       <div class="confirm-box" id="resetConfirm" hidden>
         <p><strong>Delete all progress?</strong> This cannot be undone.</p>
@@ -260,12 +265,12 @@
         </div>
       </details>
     </section>
+    </div>
   </main>
 
-  <script src="game.js?v=1.1.0"></script>
-  <script src="events.js?v=1.1.0"></script>
-  <script src="stages.js?v=1.1.0"></script>
-  <script src="stage-events.js?v=1.1.0"></script>
-  <script src="scene.js?v=1.1.0"></script>
+  <script src="game.js?v=1.2.0"></script>
+  <script src="events.js?v=1.2.0"></script>
+  <script src="stages.js?v=1.2.0"></script>
+  <script src="stage-events.js?v=1.2.0"></script>
 </body>
 </html>

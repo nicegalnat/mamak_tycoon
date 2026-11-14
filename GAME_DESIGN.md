@@ -309,56 +309,54 @@ or recklessly. The ending text changes with the Rahman relationship.
 
 ---
 
-# v1.1 — Pixel-art scene (Phase 1: Stage 1)
+# v1.2 — "Menu Edition" visual design
 
-## Art direction
-- Based on the owner's reference image: a roadside mamak at night, warm yellow interior, green awning, LED price board, a blue **24 JAM** neon sign (left) and a vertical red **MAMAK TYCOON** neon sign (right), with a dark city skyline.
-- Limited night palette, crisp pixels, outlined characters (adults 13×26 art pixels, children 9×18).
-- The art is drawn at **256×144** and scaled up by whole device pixels: exact whole numbers on standard screens, and filling the width on high-density screens, where per-pixel unevenness can't be seen.
+The v1.1 pixel-art scene (`scene.js`) was **removed** in v1.2 and is no
+longer loaded or served. It remains only in Git history. The game is purely
+text-based.
 
-## Everything is driven by game data
-`sceneModel()` in `scene.js` reads the live game state every frame. Nothing is decorative randomness except ambient life (traffic, a cat, neon flicker, stars).
+## Direction
+A modern, readable take on a traditional Malaysian mamak / nasi kandar menu:
+laminated cards, bold menu typography, warm restaurant colours and a little
+printed-paper texture. It doesn't imitate any real restaurant's logo or menu.
 
-| Visual | Game data |
+## Palette
+| Role | Colour |
 |---|---|
-| Staff behind the counter | `employees()`, minus staff away (empty apron on the hook) |
-| Sweat drops, droopy faces | Staff morale below 40 |
-| Cook flips a roti | Manual sale (`notify('sale')`); staff flip on automatic sales |
-| Griddle size, flames, hood | Griddle level 0 / 1 / 2 / 3+ |
-| LED board + menu prices | `sellingPrice()` and the price level |
-| Posters, bunting, TV, sign glow | Marketing level |
-| Queue length, frustration | Customer demand vs production capacity, wait time, reputation |
-| People eating at the table | Real sales serve the next customer in the queue |
-| Flour sacks on the shelf | Flour stock (4 sacks = full; flattened sacks = empty) |
-| Confused cook, no steam | Out of flour |
-| Grime and flies | Hygiene below 50 / 35 |
-| Shutter with a sign | Any closure (`CUCI`, `DITUTUP`, `TUTUP SEMENTARA`, `BAIKI`) |
-| "BRB" sign instead of the cook | Owner away at the DBKL office |
-| Grade A sticker, rat warning sign | Inspection result, ignored rats |
-| Delivery lorry drives past | A flour delivery arrives |
+| Maroon (branding, headers, prices) | `#8B2525` (dark `#641A1A`) |
+| Mustard (highlights, price text, stamps) | `#E7B83D` |
+| Cream / aged paper (backgrounds, cards) | `#F5E8C8` / `#FBF3DD` |
+| Dark green (positive stats, progress, selected) | `#285A3B` |
+| Dark brown ink (body text) | `#30251C` |
 
-## Challenge visuals (`EVENT_VISUALS`)
-A table maps each challenge to actors and props while it is waiting:
+## Type
+- **Alfa Slab One:** the MAMAK TYCOON masthead and special-of-the-day titles
+- **Oswald:** menu category headers, prices, buttons
+- **Source Sans 3:** body text
+- The system monospace font is used for the receipt-style event log
 
-- The Rahman Family crowd the counter. Their mood follows the relationship, and they eat at the table after being served properly.
-- Tikus! shows a running rat. It reappears now and then if rats were ignored.
-- Tepung Habis shows empty sacks and a confused cook.
-- The DBKL officer and the health officer appear with clipboards.
-- A cerewet customer, a confused customer, a spill puddle, griddle smoke, grumbling staff and a broken lorry each have their own visual.
+All three web fonts are SIL Open Font License (commercial use allowed),
+loaded from Google Fonts with system fallbacks.
 
-`MODIFIER_VISUALS` handles effects that continue after a decision, such as mopping, smoke from careful cooking, or slow deliveries.
-**To add a visual for a future challenge, add one line to these tables.**
+## Components
+| Game element | Menu treatment |
+|---|---|
+| Header | Maroon masthead with a mustard inner rule, kicker line, stage chip and a 10-dot progress strip |
+| Panels | Cream cards with a maroon category strip and a bilingual label (Dapur, Kira-Kira, Notis, Menu Naik Taraf, Sasaran, Resit, Kesihatan Kedai) |
+| Stats | Dotted price leaders, with figures in maroon Oswald |
+| Upgrades / purchases | Menu items with maroon price tags in mustard text |
+| Main action | A large maroon button with a mustard inner border |
+| Challenges | A yellow ruled order slip with a perforated top, a rubber-stamp tier label and choice "menu lines" |
+| Event log | A receipt (monospace, dashed separators) |
+| Stage complete / victory / ending | A green "special of the day" card with a mustard banner |
+| Progress bars | Ink-outlined bars with a green fill (mustard when complete) |
+
+## Texture
+An SVG fractal-noise grain, generated inline in CSS and laid lightly over
+the page and cards, plus soft radial shading. There are no image files and
+no third-party textures.
 
 ## Layout
-- **Desktop and iPad landscape (≥960px):** the scene sticks to the left, with the controls on the right.
-- **Phones and iPad portrait:** the order is scene, Make & Sell, Challenges, then stats. The scene takes about 30–40% of the screen height.
-- The scene is hidden for Stages 2–10 until their art phases.
-
-## Performance
-- Each frame takes about 1 ms to draw, at 12 frames per second (6 with reduced motion).
-- `requestAnimationFrame` stops when the tab is hidden.
-- Reduced-motion users get no traffic, cat or flicker, and a slower frame rate.
-
-## Next phases
-- **Phase 2:** Stages 2–4 (a larger restaurant, a district map view, a Malaysia map).
-- **Phase 3:** Stages 5–10 (breakfast mega-factories, the Ministry and Dhal Reserve, the festival, a world map, robot kitchens, the Mamakverse).
+- **≥900px:** two menu pages. Left: production, challenges, business health, log. Right: stats, upgrades, milestones, settings. Stages 2–10 put their blocks in a two-column grid above.
+- **Phones:** one column in this order: main button, challenges, stats, upgrades. The stage story becomes tap-to-expand, and goals follow the first controls.
+- Touch targets are at least 44px. There's no sideways scrolling from 320px to 1920px wide.

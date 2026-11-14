@@ -81,7 +81,6 @@ but it can't stop you finishing the stage.
 | `events.js` | The Challenges & Events engine and the Stage 1 events. **Event chances, cooldowns and costs are in `EVENT_CONFIG` at the top.** |
 | `stages.js` | Stages 2–10: each stage's rules, numbers, screens and goals, plus stage transitions and the ending. **Each stage's numbers are in a block named `S2`, `S3`… near its section.** |
 | `stage-events.js` | Surprise challenges, Rahman Family visits and story events for Stages 2–10 |
-| `scene.js` | The animated pixel-art scene (Stage 1 so far). Drawn by code, driven by live game data |
 | `GAME_DESIGN.md` | The design plan: stages, formulas, pacing |
 | `README.md` | This file |
 
@@ -129,33 +128,35 @@ testing shortcuts:
 Cash added this way does not count as revenue. The panel will be removed or
 hidden in a later version.
 
-## The pixel-art scene (v1.1, Stage 1)
+## Look and feel (v1.2, "Menu Edition")
 
-At the top of the page is an animated 8-bit-style roadside mamak at night,
-inspired by Kuala Lumpur street scenes. It shows a green awning, a blue
-"24 JAM" neon sign and a red "MAMAK TYCOON" sign. **Everything in it comes
-from your actual game:**
+Mamak Tycoon is a **text-based** game styled like a modern take on an
+old-school nasi kandar / mamak menu:
 
-- **Production**: the cook flips roti when you tap, staff flip roti as they sell, and steam rises while cooking
-- **Staff**: one Roti Man appears for each hire. Absent staff leave an empty apron on the hook, and low morale shows sweat drops
-- **Equipment & prices**: the griddle grows with upgrades (flames at level 2, an extractor hood at level 3). The LED board and menu show your real prices, and marketing adds posters, bunting and a brighter sign
-- **Customers**: the queue grows when demand beats production. Waiting customers get frustrated, and served ones sit and eat or leave with a bungkus
-- **Flour & hygiene**: the sacks on the shelf follow your flour stock. Low hygiene adds grime and flies
-- **Challenges**: the Rahman Family crowd the counter, a rat runs around, the DBKL officer and health inspector visit, the shutter comes down when the stall is closed, and more. The Rahmans' faces reflect your relationship, and loyal Rahmans keep their own seat
+- a maroon menu masthead with **MAMAK TYCOON** and a ten-stage progress strip
+- cream "laminated" menu cards with maroon category headers (bilingual: *Dapur · Production*, *Kira-Kira · Business*, *Notis · Challenges*…)
+- dotted price leaders, with RM prices on maroon-and-mustard price tags
+- surprise challenges on yellow **order slips** with a rubber-stamp label
+- the event log printed like a **receipt**
+- a light paper grain generated in CSS (no image files)
 
-It uses no images or libraries. The art is drawn at 256×144 and scaled up so
-pixels stay sharp. It pauses when the tab is hidden and slows down if your
-device asks for reduced motion. Stages 2–10 will get their own scenes in
-later phases.
+Fonts are **Alfa Slab One**, **Oswald** and **Source Sans 3** from Google
+Fonts, all under the SIL Open Font License (free for commercial use), with
+system-font fallbacks. There are no illustrations, sprites or scenes. The
+personality comes from the writing, the colours and the layout.
+
+On wide screens the game shows two menu pages side by side. On phones it
+becomes one column with the main controls first, and each stage's story
+collapses into a tap-to-expand note.
 
 ## Version history
 
 - **v0.1**: Stage 1, the roadside stall
 - **v0.2**: Challenges & Events. The Rahman Family, Tikus!, Tepung Habis, a licence deadline, the health inspection, and business health stats
 - **v1.0**: all 10 stages, 40+ new challenges, a Rahman visit in every stage, a finale and an ending
-- **v1.1**: animated pixel-art scene for Stage 1, and a responsive layout for phones, tablets and desktops
+- **v1.1**: animated pixel-art scene for Stage 1 (removed in v1.2)
+- **v1.2**: "Menu Edition" redesign. Text-based mamak-menu styling; the pixel-art scene was removed
 
 ## Ideas for later
-- Pixel-art scenes for Stages 2–10
 - A New Game+ mode with a prestige bonus ("pass the stall to your children")
 - Sound effects (the satisfying slap of dough on a griddle)
