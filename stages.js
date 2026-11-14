@@ -1218,6 +1218,9 @@ function stageViewReset() {
   stageView.nodes = {};
   stageView.handlers = {};
   stageView.stage = state.stage;
+  // The stage story is open on wide screens and tap-to-expand on phones, so controls come first
+  const intro = el('stageIntro');
+  if (intro) intro.open = !(window.matchMedia && window.matchMedia('(max-width: 899px)').matches);
 }
 
 function blockShape(b) {
@@ -1317,7 +1320,9 @@ function renderStageView() {
   if (stageView.stage !== state.stage) stageViewReset();
   const blocks = def.view().filter(Boolean);
   const goals = def.goals();
-  blocks.splice(1, 0, { id: 'goals', type: 'bars', title: `Stage ${state.stage} goals`, items: goals.map(g => ({ label: g.label, value: g.progress, text: g.text, done: g.done })) });
+  // goals sit after the overview on wide screens, and after the first set of controls on phones
+  const narrow = window.matchMedia && window.matchMedia('(max-width: 899px)').matches;
+  blocks.splice(narrow ? Math.min(2, blocks.length) : 1, 0, { id: 'goals', type: 'bars', title: `Stage ${state.stage} goals`, items: goals.map(g => ({ label: g.label, value: g.progress, text: g.text, done: g.done })) });
   const handlers = {};
   const keep = new Set();
   blocks.forEach((b, i) => {
@@ -1332,6 +1337,8 @@ function renderStageView() {
       stageView.nodes[b.id] = node;
     }
     updateBlock(node, b, handlers);
+    const tab = typeof blockTab === 'function' ? blockTab(state.stage, b.id) : 'home';   // which menu tab (ui.js)
+    if (node.dataset.tabs !== tab) node.dataset.tabs = tab;
     if (box.children[i] !== node) box.insertBefore(node, box.children[i] || null);
   });
   for (const [id, node] of Object.entries(stageView.nodes)) {

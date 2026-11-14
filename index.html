@@ -4,268 +4,309 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mamak Tycoon</title>
-  <link rel="stylesheet" href="style.css?v=1.1.0">
+  <meta name="theme-color" content="#13284A">
+  <!-- Fonts: Alfa Slab One, Zilla Slab, Source Sans 3 — all SIL Open Font License (free for commercial use) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Zilla+Slab:ital,wght@0,500;0,600;0,700;1,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css?v=1.3.0">
 </head>
-<body>
-  <header class="site-header">
-    <h1>MAMAK TYCOON</h1>
-    <p class="tagline">From one roti to world domination.</p>
-    <p class="stage" id="stageLabel">Stage 1 of 10 — I Am the Mamak Owner</p>
-  </header>
+<body data-active-tab="home">
+  <div class="menu-book">
+    <div class="binder" aria-hidden="true"></div>
+    <div class="page">
+      <header class="masthead">
+        <div class="mast-main">
+          <p class="mast-kicker"><span>Restoran</span><span class="mast-dot">•</span><span>Buka 24 Jam</span><span class="mast-dot">•</span><span>Sejak Hari Ini</span></p>
+          <h1>MAMAK TYCOON</h1>
+          <p class="tagline">Game Perniagaan Mamak Paling Osem!</p>
+        </div>
+        <div class="stage-box">
+          <p class="stage-box-num" id="stageBoxNum">STAGE 1 / 10</p>
+          <p class="stage-box-name" id="stageBoxName">I Am the Mamak Owner</p>
+          <ol class="stage-dots" id="stageDots" aria-label="Progress through the 10 stages"></ol>
+          <p class="sr-only" id="stageLabel">Stage 1 of 10 — I Am the Mamak Owner</p>
+        </div>
+      </header>
 
-  <main>
-    <!-- PIXEL-ART SCENE (scene.js) -->
-    <div id="sceneColumn">
-      <section class="scene-panel" id="scenePanel" aria-label="Your mamak stall">
-        <div class="scene-frame"><canvas id="sceneCanvas" width="256" height="144" role="img" aria-label="Your mamak stall"></canvas></div>
-        <p class="scene-caption" id="sceneCaption" aria-live="polite"></p>
+      <nav class="tabs" role="tablist" aria-label="Menu sections">
+        <button type="button" role="tab" class="tab" data-tab="home" id="tab-home">Home</button>
+        <button type="button" role="tab" class="tab" data-tab="menu" id="tab-menu">Menu &amp; Upgrades</button>
+        <button type="button" role="tab" class="tab" data-tab="ops" id="tab-ops">Staff &amp; Operations</button>
+        <button type="button" role="tab" class="tab" data-tab="franchise" id="tab-franchise">Franchise &amp; Locations</button>
+      </nav>
+
+      <section class="stat-strip" id="statStrip" aria-label="Key figures">
+        <div class="strip-cell"><span class="strip-label" id="strip0l">Wang Tunai</span><span class="strip-value" id="strip0v">RM0.00</span></div>
+        <div class="strip-cell"><span class="strip-label" id="strip1l">Pengeluaran</span><span class="strip-value" id="strip1v">0 roti/sec</span></div>
+        <div class="strip-cell"><span class="strip-label" id="strip2l">Permintaan Pelanggan</span><span class="strip-value" id="strip2v">—</span></div>
+        <div class="strip-cell"><span class="strip-label" id="strip3l">Reputasi</span><span class="strip-value" id="strip3v">—</span></div>
       </section>
-    </div>
 
-    <!-- STAGES 2–10 (stages.js) -->
-    <div id="stageArea" hidden>
-      <section class="panel stage-intro" id="stageIntro">
-        <h2 id="stageIntroTitle"></h2>
-        <p id="stageIntroText"></p>
-      </section>
-      <button type="button" class="challenge-alert" id="stageAlert" hidden></button>
-      <div id="stageBlocks"></div>
-      <section class="panel victory" id="transitionPanel" hidden>
-        <h2 id="transitionTitle"></h2>
-        <p class="quote" id="transitionText"></p>
-        <p class="small" id="transitionStats"></p>
-        <p class="banner" id="transitionNext"></p>
-        <button type="button" class="buy big" id="continueButton">Continue →</button>
-      </section>
-      <section class="panel victory" id="endingPanel" hidden>
-        <h2>OPEN 24 JAM, FOREVER</h2>
-        <p class="quote">From one roti canai at a folding table to every star in the sky. The universe is fed. The teh tarik is pulled. The kuah, at last, is banjir everywhere.</p>
-        <p id="endingRahman"></p>
-        <p class="banner">THE END — Terima kasih, boss.</p>
-        <h3>Your empire</h3>
-        <dl class="stats" id="endingStats"></dl>
-        <p class="small">Mamak Tycoon is a work of fiction. All organisations, laws, characters and ministries are made up. No real roti were harmed (many were eaten).</p>
-        <button type="button" class="buy" id="playAgainButton">Play again from Stage 1</button>
-      </section>
-    </div>
+      <main class="page-grid">
+      <div id="stageArea" data-tabs="home menu ops franchise" hidden>
+        <details class="panel stage-intro" id="stageIntro" data-tabs="home" open>
+          <summary id="stageIntroTitle"></summary>
+          <p id="stageIntroText"></p>
+        </details>
+        <button type="button" class="challenge-alert" id="stageAlert" hidden></button>
+        <div id="stageBlocks"></div>
+        <section class="panel victory" id="transitionPanel" hidden>
+          <h2 id="transitionTitle"></h2>
+          <p class="quote" id="transitionText"></p>
+          <p class="small" id="transitionStats"></p>
+          <p class="banner" id="transitionNext"></p>
+          <button type="button" class="buy big" id="continueButton">Continue →</button>
+        </section>
+        <section class="panel victory" id="endingPanel" hidden>
+          <h2>OPEN 24 JAM, FOREVER</h2>
+          <p class="quote">From one roti canai at a folding table to every star in the sky. The universe is fed. The teh tarik is pulled. The kuah, at last, is banjir everywhere.</p>
+          <p id="endingRahman"></p>
+          <p class="banner">THE END — Terima kasih, boss.</p>
+          <h3>Your empire</h3>
+          <dl class="stats" id="endingStats"></dl>
+          <p class="small">Mamak Tycoon is a work of fiction. All organisations, laws, characters and ministries are made up. No real roti were harmed (many were eaten).</p>
+          <button type="button" class="buy" id="playAgainButton">Play again from Stage 1</button>
+        </section>
+      </div>
 
-    <!-- 1. STATISTICS -->
-    <section class="panel" id="statsPanel">
-      <h2>Business</h2>
-      <dl class="stats">
-        <div><dt>Cash</dt><dd id="statCash">RM0.00</dd></div>
-        <div><dt>Roti sold</dt><dd id="statRoti">0</dd></div>
-        <div><dt>Profit per roti</dt><dd id="statProfit">RM1.00</dd></div>
-        <div><dt>Employees</dt><dd id="statEmployees">0</dd></div>
-        <div><dt>Production rate</dt><dd id="statRate">0 roti/sec</dd></div>
-        <div><dt>Lifetime revenue</dt><dd id="statRevenue">RM0.00</dd></div>
-        <div><dt>Net profit</dt><dd id="statNet">RM0.00</dd></div>
-        <div><dt>Play time</dt><dd id="statTime">0:00</dd></div>
-      </dl>
-    </section>
-
-    <!-- 2. PRODUCTION -->
-    <section class="panel game-only" id="productionPanel">
-      <h2>Production</h2>
-      <button type="button" class="challenge-alert" id="challengeAlert" hidden></button>
-      <button type="button" class="make-button" id="makeButton">Make &amp; Sell Roti Canai</button>
-      <p class="feedback" id="clickFeedback" aria-live="polite">&nbsp;</p>
-      <p class="small" id="priceInfo">Selling price RM1.50 (ingredients RM0.50, profit RM1.00)</p>
-
-      <div id="autoPanel" hidden>
-        <h3>Automatic sales</h3>
-        <dl class="stats compact">
-          <div><dt>Production capacity</dt><dd id="autoCapacity">0 roti/sec</dd></div>
-          <div><dt>Customer demand</dt><dd id="autoDemand">0 roti/sec</dd></div>
-          <div><dt>Actual sales</dt><dd id="autoActual">0 roti/sec</dd></div>
-          <div><dt>Auto income</dt><dd id="autoIncome">RM0.00/sec</dd></div>
+      <section class="panel game-only" id="productionPanel" data-tabs="home">
+        <h2>Dapur — Pengeluaran Roti</h2>
+        <p class="menu-sub">Roti canai panas, pelanggan puas!</p>
+        <button type="button" class="challenge-alert" id="challengeAlert" hidden></button>
+        <button type="button" class="make-button" id="makeButton">Buat &amp; Jual Roti Canai</button>
+        <p class="feedback" id="clickFeedback" aria-live="polite">&nbsp;</p>
+        <dl class="menu-list">
+          <div><dt>Harga jual sebiji</dt><dd id="pSell">RM1.50</dd></div>
+          <div><dt>Keuntungan sebiji</dt><dd id="pProfit">RM1.00</dd></div>
+          <div><dt>Roti dijual (jumlah)</dt><dd id="pSold">0</dd></div>
+          <div><dt>Pendapatan keseluruhan</dt><dd id="pRevenue">RM0.00</dd></div>
         </dl>
-        <p class="hint" id="limitHint"></p>
-        <p class="small" id="modifierInfo"></p>
-      </div>
-    </section>
+        <p class="small" id="priceInfo">Selling price RM1.50 (ingredients RM0.50, profit RM1.00)</p>
 
-    <!-- 3. CHALLENGES (v0.2) -->
-    <section class="panel game-only" id="challengesPanel" hidden>
-      <h2>Challenges</h2>
-      <div id="challengeActive" class="challenge" hidden>
-        <p class="tier" id="chTier" data-tier="small"></p>
-        <h3 id="chTitle"></h3>
-        <p id="chText"></p>
-        <p class="small" id="chWhile"></p>
-        <p class="timer" id="chTimer"></p>
-        <div class="choices" id="chChoices"></div>
-      </div>
-      <p class="small" id="challengeNone">No problems right now. Enjoy your teh tarik while it lasts.</p>
+        <div id="autoPanel" hidden>
+          <h3>Automasi Jualan</h3>
+          <dl class="menu-list">
+            <div><dt>Kapasiti pengeluaran</dt><dd id="autoCapacity">0 roti/sec</dd></div>
+            <div><dt>Jualan sebenar</dt><dd id="autoActual">0 roti/sec</dd></div>
+            <div><dt>Permintaan pelanggan</dt><dd id="autoDemand">0 roti/sec</dd></div>
+            <div><dt>Pendapatan automatik</dt><dd id="autoIncome">RM0.00/sec</dd></div>
+          </dl>
+          <p class="hint" id="limitHint"></p>
+          <p class="small" id="modifierInfo"></p>
+        </div>
+      </section>
 
-      <div id="chEffectsWrap" hidden>
-        <h3>Active effects</h3>
-        <ul class="plain-list" id="chEffects"></ul>
-      </div>
-      <div id="chPeopleWrap" hidden>
-        <h3>Regular customers</h3>
-        <p class="small" id="chRahman"></p>
-      </div>
-      <div id="chRecentWrap" hidden>
-        <h3>Recent decisions</h3>
-        <ul class="plain-list" id="chRecent"></ul>
-      </div>
-    </section>
+      <section class="panel victory" id="victoryPanel" data-tabs="home" hidden>
+        <h2>CONGRATULATIONS, BOSS!</h2>
+        <p class="quote">“Your roadside stall has become the neighbourhood’s favourite mamak. Time to buka kedai!”</p>
+        <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
+        <h3>Your stall’s final numbers</h3>
+        <dl class="stats" id="victoryStats"></dl>
+        <p class="coming">Next: open more outlets and build a franchise. Nine more stages to go — it only gets sillier from here.</p>
+        <button type="button" class="buy big" id="continueStage2">Continue to Stage 2: New Franchise, Who Dis? →</button>
+        <button type="button" class="plain" id="newStallButton">Restart from the beginning</button>
+      </section>
 
-    <!-- 4. BUSINESS HEALTH (v0.2) -->
-    <section class="panel" id="businessPanel" hidden>
-      <h2>Business health</h2>
-      <div class="biz-stat" id="bizRep" hidden>
-        <div class="milestone-row"><span>Reputation</span><span id="bizRepValue"></span></div>
-        <progress id="bizRepBar" max="1" value="0.5"></progress>
-        <p class="small" id="bizRepEffect"></p>
-      </div>
-      <div class="biz-stat" id="bizHyg" hidden>
-        <div class="milestone-row"><span>Hygiene</span><span id="bizHygValue"></span></div>
-        <progress id="bizHygBar" max="1" value="0.5"></progress>
-        <p class="small" id="bizHygEffect"></p>
-        <div class="biz-actions">
-          <button type="button" class="action" data-action="quickWipe" id="act-quickWipe" hidden></button>
-          <button type="button" class="action" data-action="deepClean" id="act-deepClean" hidden></button>
-        </div>
-      </div>
-      <div class="biz-stat" id="bizMor" hidden>
-        <div class="milestone-row"><span>Staff morale</span><span id="bizMorValue"></span></div>
-        <progress id="bizMorBar" max="1" value="0.5"></progress>
-        <p class="small" id="bizMorEffect"></p>
-        <div class="biz-actions">
-          <button type="button" class="action" data-action="staffTreat" id="act-staffTreat" hidden></button>
-        </div>
-      </div>
-      <div class="biz-stat" id="bizFlour" hidden>
-        <div class="milestone-row"><span>Flour stock</span><span id="bizFlourValue"></span></div>
-        <progress id="bizFlourBar" max="1" value="0"></progress>
-        <p class="small" id="bizFlourEffect"></p>
-        <div class="biz-actions">
-          <button type="button" class="action" data-action="orderFlour" id="act-orderFlour" hidden></button>
-          <button type="button" class="action" data-action="emergencyFlour" id="act-emergencyFlour" hidden></button>
-          <button type="button" class="action" data-action="kakRos" id="act-kakRos" hidden></button>
-        </div>
-      </div>
-    </section>
+      <section class="panel game-only" id="stockPanel" data-tabs="home">
+        <h2>Stok Bahan</h2>
+        <dl class="menu-list">
+          <div><dt>Tepung (flour)</dt><dd id="stockFlour">Belum dikira</dd></div>
+        </dl>
+        <p class="small" id="stockNote">Flour isn't tracked yet. Everything is fresh from the supplier for now.</p>
+        <button type="button" class="link-button" data-goto-tab="ops" id="stockLink">→ Beli stok di tab Staff &amp; Operations</button>
+      </section>
 
-    <!-- 5. UPGRADES -->
-    <section class="panel game-only" id="upgradesPanel" hidden>
-      <h2>Upgrades</h2>
-      <div class="upgrade" id="upg-rotiMan" hidden>
-        <div class="upgrade-info">
-          <h3>Hire Roti Man <span class="level" id="lvl-rotiMan"></span></h3>
-          <p class="effect" id="eff-rotiMan"></p>
+      <section class="panel game-only" id="milestonesPanel" data-tabs="home" hidden>
+        <h2>Sasaran — Stage 1</h2>
+        <div class="milestone">
+          <div class="milestone-row"><span>Jual 500 roti canai</span><span id="msRotiText">0 / 500</span></div>
+          <progress id="msRoti" max="1" value="0"></progress>
         </div>
-        <button type="button" class="buy" data-buy="rotiMan" id="buy-rotiMan">Buy</button>
-      </div>
-      <div class="upgrade" id="upg-price" hidden>
-        <div class="upgrade-info">
-          <h3>Increase Roti Price <span class="level" id="lvl-price"></span></h3>
-          <p class="effect" id="eff-price"></p>
+        <div class="milestone">
+          <div class="milestone-row"><span>Upah 3 pekerja</span><span id="msStaffText">0 / 3</span></div>
+          <progress id="msStaff" max="1" value="0"></progress>
         </div>
-        <button type="button" class="buy" data-buy="price" id="buy-price">Buy</button>
-      </div>
-      <div class="upgrade" id="upg-griddle" hidden>
-        <div class="upgrade-info">
-          <h3>Upgrade Griddle <span class="level" id="lvl-griddle"></span></h3>
-          <p class="effect" id="eff-griddle"></p>
+        <div class="milestone">
+          <div class="milestone-row"><span>Pendapatan RM1,000</span><span id="msRevenueText">RM0 / RM1,000</span></div>
+          <progress id="msRevenue" max="1" value="0"></progress>
         </div>
-        <button type="button" class="buy" data-buy="griddle" id="buy-griddle">Buy</button>
-      </div>
-      <div class="upgrade" id="upg-marketing" hidden>
-        <div class="upgrade-info">
-          <h3>Marketing <span class="level" id="lvl-marketing"></span></h3>
-          <p class="effect" id="eff-marketing"></p>
-        </div>
-        <button type="button" class="buy" data-buy="marketing" id="buy-marketing">Buy</button>
-      </div>
-    </section>
+        <p class="callout">→ Selesaikan semua sasaran untuk buka Stage 2: New Franchise!</p>
+      </section>
 
-    <!-- 6. MILESTONES -->
-    <section class="panel game-only" id="milestonesPanel" hidden>
-      <h2>Milestones — Stage 1</h2>
-      <p class="small">Reach all three goals to open a proper restaurant.</p>
-      <div class="milestone">
-        <div class="milestone-row"><span>Sell 500 roti</span><span id="msRotiText">0 / 500</span></div>
-        <progress id="msRoti" max="1" value="0"></progress>
-      </div>
-      <div class="milestone">
-        <div class="milestone-row"><span>Hire 3 employees</span><span id="msStaffText">0 / 3</span></div>
-        <progress id="msStaff" max="1" value="0"></progress>
-      </div>
-      <div class="milestone">
-        <div class="milestone-row"><span>Earn RM1,000 lifetime revenue</span><span id="msRevenueText">RM0 / RM1,000</span></div>
-        <progress id="msRevenue" max="1" value="0"></progress>
-      </div>
-    </section>
-
-    <!-- STAGE 1 VICTORY -->
-    <section class="panel victory" id="victoryPanel" hidden>
-      <h2>CONGRATULATIONS, BOSS!</h2>
-      <p class="quote">“Your roadside stall has become the neighbourhood’s favourite mamak. Time to buka kedai!”</p>
-      <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
-      <h3>Your stall’s final numbers</h3>
-      <dl class="stats" id="victoryStats"></dl>
-      <p class="coming">Next: open more outlets and build a franchise. Nine more stages to go — it only gets sillier from here.</p>
-      <button type="button" class="buy big" id="continueStage2">Continue to Stage 2: New Franchise, Who Dis? →</button>
-      <button type="button" class="plain" id="newStallButton">Restart from the beginning</button>
-    </section>
-
-    <!-- 7. EVENT LOG -->
-    <section class="panel" id="logPanel">
-      <h2>Event log</h2>
-      <ul class="log" id="eventLog"></ul>
-    </section>
-
-    <!-- SAVE / RESET -->
-    <section class="panel footer-panel">
-      <p class="small" id="saveStatus">Not saved yet</p>
-      <p class="small" id="versionLabel">Mamak Tycoon v1.1 — pixel art (Stage 1)</p>
-      <button type="button" class="danger" id="resetButton">Reset Game</button>
-      <div class="confirm-box" id="resetConfirm" hidden>
-        <p><strong>Delete all progress?</strong> This cannot be undone.</p>
-        <div class="confirm-buttons">
-          <button type="button" class="danger solid" id="resetYes">Yes, reset everything</button>
-          <button type="button" class="plain" id="resetNo">Cancel</button>
+      <section class="panel game-only receipt" id="challengesPanel" data-tabs="home menu ops franchise" hidden>
+        <p class="receipt-head">*** NOTIS KHAS ***</p>
+        <h2>Cabaran Mengejut!</h2>
+        <p class="receipt-order" id="chOrder"></p>
+        <div id="challengeActive" class="challenge" hidden>
+          <p class="tier" id="chTier" data-tier="small"></p>
+          <h3 id="chTitle"></h3>
+          <p id="chText"></p>
+          <p class="small" id="chWhile"></p>
+          <p class="timer" id="chTimer"></p>
+          <div class="choices" id="chChoices"></div>
         </div>
-      </div>
+        <p class="small" id="challengeNone">Tiada notis buat masa ini. No problems right now. Enjoy your teh tarik while it lasts.</p>
 
-      <details class="dev" id="devPanel">
-        <summary>Developer panel (for testing)</summary>
-        <p class="small">Cheats for testing. Added cash does not count as revenue.</p>
-        <p class="small dev-warning" id="devCompleteNote" hidden>Stage 1 is complete, so the game is paused and these buttons have no visible effect. Tap "Start a new stall" (or Reset Game) to test again.</p>
-        <div class="dev-buttons">
-          <button type="button" data-dev="cash100">Add RM100</button>
-          <button type="button" data-dev="cash1000">Add RM1,000</button>
-          <button type="button" data-dev="roti100">Add 100 roti sold</button>
-          <button type="button" data-dev="skip60">Skip 60 seconds</button>
-          <button type="button" data-dev="flour100">Add 100 flour</button>
-          <button type="button" data-dev="statsDown">Lower all stats by 30</button>
-          <button type="button" class="danger" data-dev="reset">Reset progress</button>
+        <div id="chEffectsWrap" hidden>
+          <h3>Active effects</h3>
+          <ul class="plain-list" id="chEffects"></ul>
         </div>
-        <p class="small">Challenges</p>
-        <div class="dev-buttons">
-          <select id="devEventSelect" aria-label="Challenge to trigger"></select>
-          <button type="button" data-dev="eventTrigger">Trigger challenge</button>
-          <button type="button" data-dev="eventEnd">Clear current challenge</button>
-          <button type="button" data-dev="eventPause" id="devPauseEvents">Pause random challenges</button>
+        <div id="chPeopleWrap" hidden>
+          <h3>Regular customers</h3>
+          <p class="small" id="chRahman"></p>
         </div>
-        <p class="small">Stages</p>
-        <div class="dev-buttons">
-          <select id="devStageSelect" aria-label="Stage to jump to"></select>
-          <button type="button" data-dev="jumpStage">Jump to stage</button>
-          <button type="button" data-dev="completeStage">Complete current stage</button>
-          <button type="button" data-dev="cashBig">Add 60s of income</button>
+        <div id="chRecentWrap" hidden>
+          <h3>Recent decisions</h3>
+          <ul class="plain-list" id="chRecent"></ul>
         </div>
-      </details>
-    </section>
-  </main>
+        <div class="barcode" aria-hidden="true"></div>
+      </section>
 
-  <script src="game.js?v=1.1.0"></script>
-  <script src="events.js?v=1.1.0"></script>
-  <script src="stages.js?v=1.1.0"></script>
-  <script src="stage-events.js?v=1.1.0"></script>
-  <script src="scene.js?v=1.1.0"></script>
+      <section class="panel game-only" id="upgradesPanel" data-tabs="menu" hidden>
+        <h2>Menu Naik Taraf — Upgrades</h2>
+        <p class="menu-sub">Pilih ikut selera. Harga tertera.</p>
+        <div class="upgrade" id="upg-rotiMan" hidden>
+          <div class="upgrade-info">
+            <h3>Hire Roti Man <span class="level" id="lvl-rotiMan"></span></h3>
+            <p class="effect" id="eff-rotiMan"></p>
+          </div>
+          <button type="button" class="buy" data-buy="rotiMan" id="buy-rotiMan">Buy</button>
+        </div>
+        <div class="upgrade" id="upg-price" hidden>
+          <div class="upgrade-info">
+            <h3>Increase Roti Price <span class="level" id="lvl-price"></span></h3>
+            <p class="effect" id="eff-price"></p>
+          </div>
+          <button type="button" class="buy" data-buy="price" id="buy-price">Buy</button>
+        </div>
+        <div class="upgrade" id="upg-griddle" hidden>
+          <div class="upgrade-info">
+            <h3>Upgrade Griddle <span class="level" id="lvl-griddle"></span></h3>
+            <p class="effect" id="eff-griddle"></p>
+          </div>
+          <button type="button" class="buy" data-buy="griddle" id="buy-griddle">Buy</button>
+        </div>
+        <div class="upgrade" id="upg-marketing" hidden>
+          <div class="upgrade-info">
+            <h3>Marketing <span class="level" id="lvl-marketing"></span></h3>
+            <p class="effect" id="eff-marketing"></p>
+          </div>
+          <button type="button" class="buy" data-buy="marketing" id="buy-marketing">Buy</button>
+        </div>
+      </section>
+
+      <section class="panel" id="businessPanel" data-tabs="ops" hidden>
+        <h2>Kesihatan Kedai — Business Health</h2>
+        <div class="biz-stat" id="bizRep" hidden>
+          <div class="milestone-row"><span>Reputation</span><span id="bizRepValue"></span></div>
+          <progress id="bizRepBar" max="1" value="0.5"></progress>
+          <p class="small" id="bizRepEffect"></p>
+        </div>
+        <div class="biz-stat" id="bizHyg" hidden>
+          <div class="milestone-row"><span>Hygiene</span><span id="bizHygValue"></span></div>
+          <progress id="bizHygBar" max="1" value="0.5"></progress>
+          <p class="small" id="bizHygEffect"></p>
+          <div class="biz-actions">
+            <button type="button" class="action" data-action="quickWipe" id="act-quickWipe" hidden></button>
+            <button type="button" class="action" data-action="deepClean" id="act-deepClean" hidden></button>
+          </div>
+        </div>
+        <div class="biz-stat" id="bizMor" hidden>
+          <div class="milestone-row"><span>Staff morale</span><span id="bizMorValue"></span></div>
+          <progress id="bizMorBar" max="1" value="0.5"></progress>
+          <p class="small" id="bizMorEffect"></p>
+          <div class="biz-actions">
+            <button type="button" class="action" data-action="staffTreat" id="act-staffTreat" hidden></button>
+          </div>
+        </div>
+        <div class="biz-stat" id="bizFlour" hidden>
+          <div class="milestone-row"><span>Flour stock</span><span id="bizFlourValue"></span></div>
+          <progress id="bizFlourBar" max="1" value="0"></progress>
+          <p class="small" id="bizFlourEffect"></p>
+          <div class="biz-actions">
+            <button type="button" class="action" data-action="orderFlour" id="act-orderFlour" hidden></button>
+            <button type="button" class="action" data-action="emergencyFlour" id="act-emergencyFlour" hidden></button>
+            <button type="button" class="action" data-action="kakRos" id="act-kakRos" hidden></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="statsPanel" data-tabs="ops">
+        <h2>Kira-Kira — Business</h2>
+        <dl class="stats">
+          <div><dt>Cash</dt><dd id="statCash">RM0.00</dd></div>
+          <div><dt>Roti sold</dt><dd id="statRoti">0</dd></div>
+          <div><dt>Profit per roti</dt><dd id="statProfit">RM1.00</dd></div>
+          <div><dt>Employees</dt><dd id="statEmployees">0</dd></div>
+          <div><dt>Production rate</dt><dd id="statRate">0 roti/sec</dd></div>
+          <div><dt>Lifetime revenue</dt><dd id="statRevenue">RM0.00</dd></div>
+          <div><dt>Net profit</dt><dd id="statNet">RM0.00</dd></div>
+          <div><dt>Play time</dt><dd id="statTime">0:00</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" id="logPanel" data-tabs="home ops">
+        <h2>Resit — Event Log</h2>
+        <ul class="log" id="eventLog"></ul>
+      </section>
+
+      <section class="panel" id="franchisePanel" data-tabs="franchise">
+        <h2>Franchise &amp; Locations</h2>
+        <p class="menu-sub">Coming soon to a taman near you.</p>
+        <p class="small">Finish Stage 1 to open your first franchise outlet. Here's what's on the menu after that:</p>
+        <ol class="locked-list" id="franchiseList"></ol>
+      </section>
+
+      <section class="panel footer-panel" data-tabs="home menu ops franchise">
+        <p class="small" id="saveStatus">Not saved yet</p>
+        <p class="small" id="versionLabel">Mamak Tycoon v1.3 — menu book edition</p>
+        <button type="button" class="danger" id="resetButton">Reset Game</button>
+        <div class="confirm-box" id="resetConfirm" hidden>
+          <p><strong>Delete all progress?</strong> This cannot be undone.</p>
+          <div class="confirm-buttons">
+            <button type="button" class="danger solid" id="resetYes">Yes, reset everything</button>
+            <button type="button" class="plain" id="resetNo">Cancel</button>
+          </div>
+        </div>
+
+        <details class="dev" id="devPanel">
+          <summary>Developer panel (for testing)</summary>
+          <p class="small">Cheats for testing. Added cash does not count as revenue.</p>
+          <p class="small dev-warning" id="devCompleteNote" hidden>Stage 1 is complete, so the game is paused and these buttons have no visible effect. Tap "Start a new stall" (or Reset Game) to test again.</p>
+          <div class="dev-buttons">
+            <button type="button" data-dev="cash100">Add RM100</button>
+            <button type="button" data-dev="cash1000">Add RM1,000</button>
+            <button type="button" data-dev="roti100">Add 100 roti sold</button>
+            <button type="button" data-dev="skip60">Skip 60 seconds</button>
+            <button type="button" data-dev="flour100">Add 100 flour</button>
+            <button type="button" data-dev="statsDown">Lower all stats by 30</button>
+            <button type="button" class="danger" data-dev="reset">Reset progress</button>
+          </div>
+          <p class="small">Challenges</p>
+          <div class="dev-buttons">
+            <select id="devEventSelect" aria-label="Challenge to trigger"></select>
+            <button type="button" data-dev="eventTrigger">Trigger challenge</button>
+            <button type="button" data-dev="eventEnd">Clear current challenge</button>
+            <button type="button" data-dev="eventPause" id="devPauseEvents">Pause random challenges</button>
+          </div>
+          <p class="small">Stages</p>
+          <div class="dev-buttons">
+            <select id="devStageSelect" aria-label="Stage to jump to"></select>
+            <button type="button" data-dev="jumpStage">Jump to stage</button>
+            <button type="button" data-dev="completeStage">Complete current stage</button>
+            <button type="button" data-dev="cashBig">Add 60s of income</button>
+          </div>
+        </details>
+      </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="game.js?v=1.3.0"></script>
+  <script src="events.js?v=1.3.0"></script>
+  <script src="stages.js?v=1.3.0"></script>
+  <script src="stage-events.js?v=1.3.0"></script>
+  <script src="ui.js?v=1.3.0"></script>
 </body>
 </html>

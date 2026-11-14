@@ -309,56 +309,51 @@ or recklessly. The ending text changes with the Rahman relationship.
 
 ---
 
-# v1.1 — Pixel-art scene (Phase 1: Stage 1)
+# v1.3 — "Menu Book" interface
 
-## Art direction
-- Based on the owner's reference image: a roadside mamak at night, warm yellow interior, green awning, LED price board, a blue **24 JAM** neon sign (left) and a vertical red **MAMAK TYCOON** neon sign (right), with a dark city skyline.
-- Limited night palette, crisp pixels, outlined characters (adults 13×26 art pixels, children 9×18).
-- The art is drawn at **256×144** and scaled up by whole device pixels: exact whole numbers on standard screens, and filling the width on high-density screens, where per-pixel unevenness can't be seen.
+The v1.1 pixel-art scene (`scene.js`) was removed in v1.2 and is not served.
+v1.3 restyles the whole game as a worn, ring-bound, laminated mamak menu,
+based on the owner's own mockup. It doesn't copy any real restaurant's menu
+or logo.
 
-## Everything is driven by game data
-`sceneModel()` in `scene.js` reads the live game state every frame. Nothing is decorative randomness except ambient life (traffic, a cat, neon flicker, stars).
-
-| Visual | Game data |
+## Palette
+| Role | Colour |
 |---|---|
-| Staff behind the counter | `employees()`, minus staff away (empty apron on the hook) |
-| Sweat drops, droopy faces | Staff morale below 40 |
-| Cook flips a roti | Manual sale (`notify('sale')`); staff flip on automatic sales |
-| Griddle size, flames, hood | Griddle level 0 / 1 / 2 / 3+ |
-| LED board + menu prices | `sellingPrice()` and the price level |
-| Posters, bunting, TV, sign glow | Marketing level |
-| Queue length, frustration | Customer demand vs production capacity, wait time, reputation |
-| People eating at the table | Real sales serve the next customer in the queue |
-| Flour sacks on the shelf | Flour stock (4 sacks = full; flattened sacks = empty) |
-| Confused cook, no steam | Out of flour |
-| Grime and flies | Hygiene below 50 / 35 |
-| Shutter with a sign | Any closure (`CUCI`, `DITUTUP`, `TUTUP SEMENTARA`, `BAIKI`) |
-| "BRB" sign instead of the cook | Owner away at the DBKL office |
-| Grade A sticker, rat warning sign | Inspection result, ignored rats |
-| Delivery lorry drives past | A flour delivery arrives |
+| Maroon (headers, tabs, title, prices) | `#8B2525` (deep `#5E1818`) |
+| Yellow (masthead, active tab, main button, price tags, call-outs) | `#F2C230` |
+| Cream paper / cards / receipt | `#F7EBCD` / `#FBF2DC` / `#F6F1E3` |
+| Dark green (masthead border, subtitle, progress, stage story) | `#285A3B` |
+| Ink brown (body text) | `#30251C` |
+| Dark blue table (page background) | `#13284A` |
 
-## Challenge visuals (`EVENT_VISUALS`)
-A table maps each challenge to actors and props while it is waiting:
+## Type
+- **Alfa Slab One:** title
+- **Zilla Slab:** headings, tabs, figures, buttons
+- **Source Sans 3:** body text
+- System monospace for receipt details
 
-- The Rahman Family crowd the counter. Their mood follows the relationship, and they eat at the table after being served properly.
-- Tikus! shows a running rat. It reappears now and then if rats were ignored.
-- Tepung Habis shows empty sacks and a confused cook.
-- The DBKL officer and the health officer appear with clipboards.
-- A cerewet customer, a confused customer, a spill puddle, griddle smoke, grumbling staff and a broken lorry each have their own visual.
+All three web fonts are OFL (commercial use allowed).
 
-`MODIFIER_VISUALS` handles effects that continue after a decision, such as mopping, smoke from careful cooking, or slow deliveries.
-**To add a visual for a future challenge, add one line to these tables.**
+## Structure
+| Area | What it shows |
+|---|---|
+| Masthead | Kicker "Restoran • Buka 24 Jam • Sejak Hari Ini", worn MAMAK TYCOON, Malay tagline, stage box (STAGE n / 10, stage name, 10 progress dots) |
+| Tabs | Home · Menu & Upgrades · Staff & Operations · Franchise & Locations. The last tab you used is remembered on the device; empty tabs are hidden |
+| Stat strip | Stage 1: cash, production, demand, reputation stars (0–100 reputation → 0–5 stars; "Belum dinilai" until unlocked). Stages 2–10: the first four figures of that stage's overview |
+| Home (Stage 1) | Dapur (main button and real price/sales figures, Automasi Jualan), Stok Bahan (real flour stock; "Belum dikira" before flour tracking), Sasaran checklist, Notis Khas receipt, event log |
+| Menu & Upgrades | Upgrades as menu items with RM price tags |
+| Staff & Operations | Business health (cleaning, staff treats, flour orders), Kira-Kira totals, event log |
+| Franchise & Locations | Stage 1: a teaser list of the stages to come. Stage 2: opening new outlets |
+| Notis Khas | Torn receipt with an order number, rubber-stamp tier, numbered choices [1] [2] [3] and a barcode. It follows you to other tabs while a challenge is waiting |
 
-## Layout
-- **Desktop and iPad landscape (≥960px):** the scene sticks to the left, with the controls on the right.
-- **Phones and iPad portrait:** the order is scene, Make & Sell, Challenges, then stats. The scene takes about 30–40% of the screen height.
-- The scene is hidden for Stages 2–10 until their art phases.
+Stages 2–10 sections are assigned to tabs in `ui.js` (`STAGE_TABS`). Main
+gameplay stays on Home, purchases go to Menu, and overview/records go to
+Operations.
 
-## Performance
-- Each frame takes about 1 ms to draw, at 12 frames per second (6 with reduced motion).
-- `requestAnimationFrame` stops when the tab is hidden.
-- Reduced-motion users get no traffic, cat or flicker, and a slower frame rate.
+Only real game data is shown. Mockup items the game doesn't track (oil, eggs
+and dhal stock, "today's" revenue) are deliberately left out.
 
-## Next phases
-- **Phase 2:** Stages 2–4 (a larger restaurant, a district map view, a Malaysia map).
-- **Phase 3:** Stages 5–10 (breakfast mega-factories, the Ministry and Dhal Reserve, the festival, a world map, robot kitchens, the Mamakverse).
+## Textures
+Paper grain, coffee-stain shading, worn-ink title mask, binder rings,
+laminate peel and barcode are all CSS (gradients and inline SVG noise). There
+are no image files and no third-party textures.
