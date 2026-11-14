@@ -81,6 +81,7 @@ but it can't stop you finishing the stage.
 | `events.js` | The Challenges & Events engine and the Stage 1 events. **Event chances, cooldowns and costs are in `EVENT_CONFIG` at the top.** |
 | `stages.js` | Stages 2–10: each stage's rules, numbers, screens and goals, plus stage transitions and the ending. **Each stage's numbers are in a block named `S2`, `S3`… near its section.** |
 | `stage-events.js` | Surprise challenges, Rahman Family visits and story events for Stages 2–10 |
+| `ui.js` | Menu-book interface: tabs, stat strip, stage box (display only, no game rules) |
 | `GAME_DESIGN.md` | The design plan: stages, formulas, pacing |
 | `README.md` | This file |
 
@@ -128,26 +129,26 @@ testing shortcuts:
 Cash added this way does not count as revenue. The panel will be removed or
 hidden in a later version.
 
-## Look and feel (v1.2, "Menu Edition")
+## Look and feel (v1.3, "Menu Book")
 
-Mamak Tycoon is a **text-based** game styled like a modern take on an
-old-school nasi kandar / mamak menu:
+Mamak Tycoon is a **text-based** game styled like a worn, ring-bound,
+laminated mamak menu sitting on a dark blue table:
 
-- a dark blue page with a yellow menu masthead, **MAMAK TYCOON** and a ten-stage progress strip
-- cream "laminated" menu cards with yellow category headers (bilingual: *Dapur · Production*, *Kira-Kira · Business*, *Notis · Challenges*…)
-- dotted price leaders, with RM prices on yellow price tags
-- surprise challenges on yellow **order slips** with a rubber-stamp label
-- the event log printed like a **receipt**
-- a light paper grain generated in CSS (no image files)
+- a yellow masthead with a worn maroon **MAMAK TYCOON**, the tagline *"Game Perniagaan Mamak Paling Osem!"* and a stage box
+- folder **tabs**: *Home · Menu & Upgrades · Staff & Operations · Franchise & Locations*
+- a **stat strip** (Wang Tunai · Pengeluaran · Permintaan Pelanggan · Reputasi), always showing real game numbers
+- cream menu cards with maroon headers and dotted price leaders, yellow price tags, and a big yellow **Buat & Jual Roti Canai** button
+- a **Sasaran** checklist with a yellow call-out, and **Stok Bahan** (flour)
+- surprise challenges printed on a torn **receipt**: *** NOTIS KHAS ***, an order number, numbered choices and a barcode
+- binder rings, aged-paper stains and a peeling laminate corner, all generated in CSS (no image files)
 
-Fonts are **Alfa Slab One**, **Oswald** and **Source Sans 3** from Google
+Fonts are **Alfa Slab One**, **Zilla Slab** and **Source Sans 3** from Google
 Fonts, all under the SIL Open Font License (free for commercial use), with
-system-font fallbacks. There are no illustrations, sprites or scenes. The
-personality comes from the writing, the colours and the layout.
+system fallbacks. There are no illustrations or sprites.
 
-On wide screens the game shows two menu pages side by side. On phones it
-becomes one column with the main controls first, and each stage's story
-collapses into a tap-to-expand note.
+Layouts: three columns on desktop, two on tablets, one on phones (with the
+main button first). Stages 2–10 put their sections on the matching tabs, and
+empty tabs are hidden.
 
 ## Version history
 
@@ -156,6 +157,7 @@ collapses into a tap-to-expand note.
 - **v1.0**: all 10 stages, 40+ new challenges, a Rahman visit in every stage, a finale and an ending
 - **v1.1**: animated pixel-art scene for Stage 1 (removed in v1.2)
 - **v1.2**: "Menu Edition" redesign. Text-based mamak-menu styling; the pixel-art scene was removed
+- **v1.3**: "Menu Book" interface. Ring-bound menu look, tabs, a stat strip and a receipt-style challenge notice
 
 ## Ideas for later
 - A New Game+ mode with a prestige bonus ("pass the stall to your children")

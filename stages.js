@@ -1337,6 +1337,8 @@ function renderStageView() {
       stageView.nodes[b.id] = node;
     }
     updateBlock(node, b, handlers);
+    const tab = typeof blockTab === 'function' ? blockTab(state.stage, b.id) : 'home';   // which menu tab (ui.js)
+    if (node.dataset.tabs !== tab) node.dataset.tabs = tab;
     if (box.children[i] !== node) box.insertBefore(node, box.children[i] || null);
   });
   for (const [id, node] of Object.entries(stageView.nodes)) {

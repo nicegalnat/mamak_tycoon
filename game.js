@@ -1096,6 +1096,7 @@ function renderMasthead() {
 function renderLogAndSave() {
   const s = state;
   renderMasthead();
+  if (typeof renderUI === 'function') renderUI();   // menu-book tabs & stat strip (ui.js)
   // Event log
   if (logDirty) {
     const list = el('eventLog');
@@ -1123,7 +1124,7 @@ function renderProduction() {
   const s = state;
   const block = blockReason();
   const btn = el('makeButton');
-  let label = 'Make & Sell Roti Canai';
+  let label = 'Buat & Jual Roti Canai';
   if (block === 'closed') label = `Stall closed — opens in ${secondsLeft('closed')}s`;
   else if (block === 'flour') label = 'Out of flour! Restock in Business health';
   else if (block === 'away') label = `You're busy: ${awayLabel()} (${secondsLeft('ownerAway')}s)`;

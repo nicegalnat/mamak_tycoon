@@ -309,54 +309,51 @@ or recklessly. The ending text changes with the Rahman relationship.
 
 ---
 
-# v1.2 — "Menu Edition" visual design
+# v1.3 — "Menu Book" interface
 
-The v1.1 pixel-art scene (`scene.js`) was **removed** in v1.2 and is no
-longer loaded or served. It remains only in Git history. The game is purely
-text-based.
-
-## Direction
-A modern, readable take on a traditional Malaysian mamak / nasi kandar menu:
-laminated cards, bold menu typography, warm restaurant colours and a little
-printed-paper texture. It doesn't imitate any real restaurant's logo or menu.
+The v1.1 pixel-art scene (`scene.js`) was removed in v1.2 and is not served.
+v1.3 restyles the whole game as a worn, ring-bound, laminated mamak menu,
+based on the owner's own mockup. It doesn't copy any real restaurant's menu
+or logo.
 
 ## Palette
 | Role | Colour |
 |---|---|
-| Dark blue (page background, text on yellow, accents) | `#13284A` (deep `#0B1A33`) |
-| Yellow (masthead, headers, main button, price tags) | `#F7CB3A` |
-| Cream / aged paper (backgrounds, cards) | `#F5E8C8` / `#FBF3DD` |
-| Dark green (positive stats, progress, selected) | `#285A3B` |
-| Dark brown ink (body text) | `#30251C` |
+| Maroon (headers, tabs, title, prices) | `#8B2525` (deep `#5E1818`) |
+| Yellow (masthead, active tab, main button, price tags, call-outs) | `#F2C230` |
+| Cream paper / cards / receipt | `#F7EBCD` / `#FBF2DC` / `#F6F1E3` |
+| Dark green (masthead border, subtitle, progress, stage story) | `#285A3B` |
+| Ink brown (body text) | `#30251C` |
+| Dark blue table (page background) | `#13284A` |
 
 ## Type
-- **Alfa Slab One:** the MAMAK TYCOON masthead and special-of-the-day titles
-- **Oswald:** menu category headers, prices, buttons
+- **Alfa Slab One:** title
+- **Zilla Slab:** headings, tabs, figures, buttons
 - **Source Sans 3:** body text
-- The system monospace font is used for the receipt-style event log
+- System monospace for receipt details
 
-All three web fonts are SIL Open Font License (commercial use allowed),
-loaded from Google Fonts with system fallbacks.
+All three web fonts are OFL (commercial use allowed).
 
-## Components
-| Game element | Menu treatment |
+## Structure
+| Area | What it shows |
 |---|---|
-| Header | Yellow masthead with a dark blue inner rule, kicker line, stage chip and a 10-dot progress strip |
-| Panels | Cream cards framed in yellow, with a yellow category strip and a bilingual label (Dapur, Kira-Kira, Notis, Menu Naik Taraf, Sasaran, Resit, Kesihatan Kedai) |
-| Stats | Dotted price leaders, with figures in dark blue Oswald |
-| Upgrades / purchases | Menu items with yellow price tags in dark blue text |
-| Main action | A large yellow button with a dark blue inner border |
-| Challenges | A yellow ruled order slip with a perforated top, a rubber-stamp tier label and choice "menu lines" |
-| Event log | A receipt (monospace, dashed separators) |
-| Stage complete / victory / ending | A green "special of the day" card with a mustard banner |
-| Progress bars | Ink-outlined bars with a green fill (mustard when complete) |
+| Masthead | Kicker "Restoran • Buka 24 Jam • Sejak Hari Ini", worn MAMAK TYCOON, Malay tagline, stage box (STAGE n / 10, stage name, 10 progress dots) |
+| Tabs | Home · Menu & Upgrades · Staff & Operations · Franchise & Locations. The last tab you used is remembered on the device; empty tabs are hidden |
+| Stat strip | Stage 1: cash, production, demand, reputation stars (0–100 reputation → 0–5 stars; "Belum dinilai" until unlocked). Stages 2–10: the first four figures of that stage's overview |
+| Home (Stage 1) | Dapur (main button and real price/sales figures, Automasi Jualan), Stok Bahan (real flour stock; "Belum dikira" before flour tracking), Sasaran checklist, Notis Khas receipt, event log |
+| Menu & Upgrades | Upgrades as menu items with RM price tags |
+| Staff & Operations | Business health (cleaning, staff treats, flour orders), Kira-Kira totals, event log |
+| Franchise & Locations | Stage 1: a teaser list of the stages to come. Stage 2: opening new outlets |
+| Notis Khas | Torn receipt with an order number, rubber-stamp tier, numbered choices [1] [2] [3] and a barcode. It follows you to other tabs while a challenge is waiting |
 
-## Texture
-An SVG fractal-noise grain, generated inline in CSS and laid lightly over
-the page and cards, plus soft radial shading. There are no image files and
-no third-party textures.
+Stages 2–10 sections are assigned to tabs in `ui.js` (`STAGE_TABS`). Main
+gameplay stays on Home, purchases go to Menu, and overview/records go to
+Operations.
 
-## Layout
-- **≥900px:** two menu pages. Left: production, challenges, business health, log. Right: stats, upgrades, milestones, settings. Stages 2–10 put their blocks in a two-column grid above.
-- **Phones:** one column in this order: main button, challenges, stats, upgrades. The stage story becomes tap-to-expand, and goals follow the first controls.
-- Touch targets are at least 44px. There's no sideways scrolling from 320px to 1920px wide.
+Only real game data is shown. Mockup items the game doesn't track (oil, eggs
+and dhal stock, "today's" revenue) are deliberately left out.
+
+## Textures
+Paper grain, coffee-stain shading, worn-ink title mask, binder rings,
+laminate peel and barcode are all CSS (gradients and inline SVG noise). There
+are no image files and no third-party textures.
