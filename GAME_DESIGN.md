@@ -9,13 +9,13 @@ teh tarik, uncles at plastic tables, late-night football suppers.
 
 **Tagline:** From one roti to world domination.
 
-## The three stages
+## Structure
 
-| Stage | Name | Core idea | Status |
-|---|---|---|---|
-| 1 | The Roadside Stall | Make roti by hand, hire staff, balance production against demand | **Built (v0.1)** |
-| 2 | The Restaurant | Open a proper kedai: menu items, 24h operation, reputation | Planned |
-| 3 | The Empire | Franchises, central kitchen, supply chains, then a defined ending | Planned |
+The game has **ten stages** and a defined ending. It starts grounded and gets
+steadily more absurd. The full stage-by-stage design is in the
+**v1.0 — Ten Stages** section at the end of this file. The sections below
+document Stage 1 and the challenge system (v0.1 and v0.2), which the later
+stages build on.
 
 ## Stage 1 — The Roadside Stall
 
@@ -212,3 +212,97 @@ and permanent bonuses that will carry into Stage 2.
 - Planned escalations: one rat → hygiene inspections at several outlets →
   a nationwide food safety crisis. Rahman visits continue at the restaurant
   (a bigger family and bigger expectations), and rival restaurants open nearby.
+
+---
+
+# v1.0 — Ten Stages
+
+## The arc
+The game starts grounded (a real-feeling roadside stall) and loses its mind
+one stage at a time: franchise, district war, the whole country, a
+fictional breakfast law, a fictional food ministry, a giant festival,
+the world, an AI singularity, and finally the universe. **Every stage adds a
+new system**; it is not the same clicker reskinned.
+
+| # | Stage | Core system (new in this stage) | Goals | Main tension |
+|---|---|---|---|---|
+| 1 | I Am the Mamak Owner | Manual production → automation, demand vs capacity, stock/hygiene/morale | 500 roti, 3 staff, RM1,000 revenue | Tapping vs investing; challenges |
+| 2 | New Franchise, Who Dis? | **Multi-outlet management**: 4 location types (traffic, rent, spend), staff per outlet, shared kitchen capacity, menu items | 6 outlets, RM50/s profit, 3 menu items | Cheap tamans vs expensive high-traffic sites; outlets can run at a loss; the kitchen bottleneck |
+| 3 | Mamak District Takeover | **Territory map** (4×4 blocks): open next to your blocks, defend strength, price wars and buy-outs; rival AI attacks and expands every 16s | 60% market share, own Simpang Emas, drive out one rival | Expanding vs defending; picking targets |
+| 4 | Satu Malaysia, Satu Mamak | **Logistics**: buy lorries (Peninsula) and planes (Sabah/Sarawak), assign them per region, match regional taste (randomised each game) | All 6 regions, 90% fulfilment, RM12,000/s | Allocating a limited fleet; demand rises with TV adverts |
+| 5 | Akta Sarapan Wajib 24 Jam | **Forecast planning + bureaucracy**: 20s days; set the quota from a ±7% forecast; forms arrive and expire; clerks and stamp upgrades | 2M breakfasts, 5 compliant days in a row, survive the Emergency | Shortage (compliance falls) vs waste (costs money); paperwork vs production |
+| 6 | Prime Mamak Minister | **Policy toggles + national resource**: Dhal Reserve drains; 7 policies each trade approval, dhal, upkeep and income; refineries | Hold 80% approval and 60% dhal for 20s, RM15M treasury, survive the Dhal Crisis | Every policy helps one thing and hurts another |
+| 7 | Hari Mamak Sedunia | **Deadline festival planning + rhythm game**: 5 readiness tracks, decaying hype, a FLIP! timing game (or choreographers) | 80% readiness, every track ≥50%, a successful festival | Spending before the countdown; a failed festival gives a do-over |
+| 8 | Mamak Goes International | **Cultural adaptation + time zones**: each city has a hidden authentic-vs-local preference, learned from feedback (6s tasting delay); supper windows across 24 UTC hours | 24/24 hours covered, 6 "Shiok" cities, RM7.5M/s | Choosing a geographic spread; tuning each city |
+| 9 | The Great Roti Singularity | **AI compute allocation**: production / self-improvement / quality; exponential compute growth; autonomy vs oversight (a strike halves output) | 1 quadrillion roti, oversight above autonomy, handle the AI Committee | Growth vs control |
+| 10 | Mamakverse | **Intergalactic expansion**: probes explore systems, Dark Dhal buys warp lanes, 5 alien species with specific requests (×2 if right, ×0.6 if wrong) | 1,000,000 star systems, then the finale | Discovering what aliens want; two currencies |
+
+## Transitions
+- Finishing a stage pauses the game on a **Stage Complete** screen: the outro story, time taken, money earned, and a preview of the next stage.
+- **Continue** starts the next stage with its own starting cash, plus up to 50% of it again from your savings. Savings help, but never break the next stage's balance.
+- Temporary effects are cleared between stages. The **Rahman relationship carries through the whole game.**
+- Stage 10 ends with the finale event, then the **ending screen**: closing text that depends on the Rahman relationship, full stats, time per stage, and "Play again".
+
+## Surprise challenges by stage
+Costs in Stages 2–10 are set in **seconds of income** when a challenge starts, so they stay fair at every scale. Every challenge has a free option.
+
+| Stage | Story event (needed for the goal) | Random challenges |
+|---|---|---|
+| 2 | — | The Regional Manager Is "Working From Home", MakanGo raises commission, Boss Kuah Banjir! |
+| 3 | — | Roti for RM0.50?!, the signboard arms race, double-parking chaos |
+| 4 | — | Monsoon floods (a region's capacity), viral taste trend (changes a region's taste), balik kampung highway jam |
+| 5 | **Compulsory Breakfast Emergency** (day 6: demand doubles) | Form version 2.0, printer jam at the Registry, the 4am breakfast rush |
+| 6 | **The Great Dhal Crisis** (reserve drops to 3%) | Kuah viscosity scandal, teh tarik foam shortage, petition for taller roti tisu |
+| 7 | **The Great Rehearsal Disaster** (10,000 roti land on the guest of honour) | Uniforms all size XXXS, rain on the rehearsal, the influencer's demands |
+| 8 | **The Disappearance of 10 Million Roti** | Lost in translation ("Bread That Cannot"), time zone confusion, homesick students |
+| 9 | **The AI Chef Management Committee** | Roti in low Earth orbit, RotiGPT writes poetry, sentient sambal |
+| 10 | **The Last Customers in the Universe** (finale, no timer) | Aliens refuse to pay service charge, black hole ate a delivery, customer from the year 3025 |
+
+## The Rahman Family across the game
+One visit per stage (90s in), plus Stage 1's three visits and the finale.
+Each visit has a **friendly** version (relationship ≥ 1) and a **grumpy**
+version. The choices change the relationship and have stage-specific effects.
+
+| Stage | The Rahmans… |
+|---|---|
+| 2 | want to run "Rahman Express", a franchise of your franchise, from their porch |
+| 3 | offer to lead a taman boycott of your rivals (or eat at KS, in the window, facing you) |
+| 4 | go on a balik kampung road trip and review every region's kuah |
+| 5 | Puan Rahman becomes the (fictional) Chief Breakfast Compliance Auditor |
+| 6 | Nenek leads the "Bring Back Thick Kuah" movement |
+| 7 | 47 relatives want to be the festival's opening act |
+| 8 | review your outlets worldwide on MakanAdvisor (fictional) |
+| 9 | RotiGPT turns out to be trained on 40 years of Encik Rahman's complaints |
+| 10 | arrive at the edge of the universe as the last customers in existence |
+
+## Writing and sensitivity rules
+- The setting is fictional: the Breakfast Authority, the Ministry of Mamak Affairs, MakanGo, MakanAdvisor, the rival chains, and every person.
+- No real politicians, parties, royalty, government logos or slogans. No jokes about race, religion or protected groups.
+- The satire targets food, business, bureaucracy and everyday Malaysian life.
+- Malaysian English with Bahasa Malaysia mixed in, used naturally ("Boss, kuah banjir!"). Interface instructions stay plain English.
+- Regional tastes in Stage 4 are **randomised each game**, so no region is stereotyped.
+
+## Balancing (simulated players)
+An efficient simulated player per stage (`bots.js`, used during development) gives:
+
+| Stage | Time (efficient play) |
+|---|---|
+| 1 | ~4.5 min |
+| 2 | ~7.5 min |
+| 3 | ~6–8 min |
+| 4 | ~5 min |
+| 5 | ~6 min |
+| 6 | ~3 min |
+| 7 | ~4 min (perfect rhythm; slower for humans) |
+| 8 | ~3 min |
+| 9 | ~7.5 min |
+| 10 | ~4.5 min |
+| **Whole game** | **~50 min** for an efficient bot, so roughly 60–90 min for a person |
+
+Full playthroughs finish whether challenges are handled carefully, randomly
+or recklessly. The ending text changes with the Rahman relationship.
+
+## Adding or changing a stage
+- Each stage is one entry in `STAGES` in `stages.js`, with `init`, `tick`, `income`, `view` and `goals`.
+- Screens are built from simple blocks (stats, buttons, rows, grid, bars, text). The renderer updates buttons in place, so taps don't miss on an iPad.
+- Challenges for a stage go in `stage-events.js`, with `stage: n`. Wrap them in `laterEvent()` so their costs scale with income.

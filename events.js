@@ -34,6 +34,7 @@ const EVENT_CONFIG = {
   quietTimeSec: 30,           // calm period after any challenge ends
   randomStartRoti: 80,        // random challenges only start after this many roti...
   randomNeedsEmployees: 1,    // ...and once you have staff
+  laterStageCalmSec: 40,      // Stages 2–10: no random challenges in the first 40s of a stage
   tiers: {
     small: { label: 'Small', chancePerCheck: 0.12, timeoutSec: 30 },
     medium: { label: 'Medium', chancePerCheck: 0.05, timeoutSec: 90 },
@@ -65,7 +66,7 @@ const EVENT_CONFIG = {
 let rng = Math.random;        // replaced in automated tests
 function rand() { return rng(); }
 
-function currentStage() { return 1; }  // Stage 2/3 will change this
+function currentStage() { return state.stage || 1; }
 
 function scaleCost(base) {
   return Math.ceil(base * (EVENT_CONFIG.stageCostMultiplier[currentStage()] || 1));
@@ -108,6 +109,7 @@ function describeModifier(m) {
   if (m.productionMult && m.productionMult !== 1) parts.push(`Production ${pctChange(m.productionMult)}`);
   if (m.demandMult && m.demandMult !== 1) parts.push(`Demand ${pctChange(m.demandMult)}`);
   if (m.deliveryMult && m.deliveryMult !== 1) parts.push(`Flour deliveries take ×${m.deliveryMult} longer`);
+  if (m.incomeMult && m.incomeMult !== 1) parts.push(`Income ${pctChange(m.incomeMult)}`);
   return parts.join(', ') + dur;
 }
 
@@ -140,6 +142,10 @@ function effectLines(fx, apply) {
   if (fx.cash) {
     if (apply) state.cash = roundMoney(state.cash + fx.cash);
     lines.push(`+${money(fx.cash)}`);
+  }
+  if (fx.pay) {   // a cost decided by the event (already a fixed amount)
+    if (apply) lines.push(`Paid ${money(spend(fx.pay, true))}`);
+    else lines.push(`Costs ${money(fx.pay)}`);
   }
   if (fx.fine) {
     if (apply) lines.push(`Fine paid: ${money(spend(fx.fine, true))}`);
@@ -242,7 +248,7 @@ const EVENTS = {
         return [
           { id: 'cake', label: 'Make the roti cake and sing', cost: scaleCost(10),
             effects: { modifier: { id: 'rahmanCake', label: 'Singing for Nenek', sec: 12, ownerAway: true, productionMult: 0.5 }, sell: 12, rep: 6, rel: 2 },
-            text: 'Your staff sing Allah Selamatkan Kamu. The video goes round every family WhatsApp group.' },
+            text: 'Your staff sing Happy Birthday in three languages. The video goes round every family group chat.' },
           { id: 'normal', label: 'Serve them normally',
             effects: { sell: 12, rep: 1 },
             text: 'A good, normal meal. Nenek blows out an imaginary candle anyway.' },
@@ -514,7 +520,7 @@ const EVENTS = {
     onStart(ev) { ev.data.name = staffName(Math.floor(rand() * 8)); },
     text: ev => `${ev.data.name} is running late — his motorbike has a flat tyre on the Federal Highway.`,
     choices: () => [
-      { id: 'grab', label: 'Pay for his Grab ride', cost: scaleCost(6),
+      { id: 'grab', label: 'Pay for his e-hailing ride', cost: scaleCost(6),
         effects: { morale: 3 }, text: 'He arrives ten minutes later, grateful.' },
       { id: 'cover', label: 'Cover for him until he arrives',
         effects: { modifier: { id: 'staffLate', label: 'Staff running late', sec: 30, staffAway: 1 }, morale: 2 },
@@ -595,7 +601,7 @@ const EVENTS = {
         text: 'Uncle Repairman fixes it in five minutes and charges for an hour. Fair enough.' },
       { id: 'diy', label: 'Fix it yourself',
         effects: { modifier: { id: 'diyRepair', label: 'Fixing the griddle', sec: 20, closed: true } },
-        text: 'Half a roll of tape and one YouTube video later, it works.' },
+        text: 'Half a roll of tape and one online tutorial later, it works.' },
       { id: 'carry', label: 'Keep cooking carefully',
         detail: 'Production −40% for 60s · 20% chance of a scary flare-up (Morale −8, Hygiene −5)',
         apply: () => (rand() < 0.2
@@ -751,7 +757,8 @@ function activeEventModifier() {
   if (!def || !def.whileActive) return null;
   const w = def.whileActive;
   return { id: 'event_' + ev.id, label: w.label, until: null, demandMult: w.demandMult ?? 1,
-    productionMult: w.productionMult ?? 1, closed: false, ownerAway: false, staffAway: 0, deliveryMult: 1, fromEvent: true };
+    productionMult: w.productionMult ?? 1, closed: false, ownerAway: false, staffAway: 0, deliveryMult: 1,
+    incomeMult: w.incomeMult ?? 1, fromEvent: true };
 }
 
 function startEvent(id) {
@@ -786,7 +793,7 @@ function finishEvent(ev, choiceLabel, text, lines) {
 
 function resolveChoice(choiceId) {
   const ev = state.events.active;
-  if (!ev || state.stage1Complete) return false;
+  if (!ev || isPaused()) return false;
   const choice = getChoices(ev).find(c => c.id === choiceId);
   if (!choice || choiceBlockedReason(choice)) return false;
 
@@ -867,7 +874,11 @@ function eventsTick(seconds) {
 
   // 2. Random small and medium challenges
   if (E.paused) return;
-  if (employees() < EVENT_CONFIG.randomNeedsEmployees || state.rotiSold < EVENT_CONFIG.randomStartRoti) return;
+  if (currentStage() === 1) {
+    if (employees() < EVENT_CONFIG.randomNeedsEmployees || state.rotiSold < EVENT_CONFIG.randomStartRoti) return;
+  } else if (gameTime() - state.stageStartTime < EVENT_CONFIG.laterStageCalmSec) {
+    return;   // let the player settle into a new stage first
+  }
   for (const tier of ['medium', 'small']) {
     if (rand() < EVENT_CONFIG.tiers[tier].chancePerCheck) {
       const pick = pickWeighted(eligibleRandomEvents(tier));
@@ -919,7 +930,7 @@ let choicesSignature = '';
 
 function renderChallenges() {
   const s = state;
-  const hidden = !s.revealed.challenges || s.stage1Complete;
+  const hidden = !s.revealed.challenges || isPaused();
   setHidden('challengesPanel', hidden);
   if (hidden) return;
 
@@ -1043,7 +1054,7 @@ function setupEventsUI() {
     const opt = document.createElement('option');
     opt.value = id;
     const title = typeof def.title === 'function' ? def.title({ data: {} }) : def.title;
-    opt.textContent = `${title} (${EVENT_CONFIG.tiers[def.tier].label})`;
+    opt.textContent = `S${def.stage || 1}: ${title} (${EVENT_CONFIG.tiers[def.tier].label})`;
     select.appendChild(opt);
   }
   updatePauseLabel();
@@ -1057,8 +1068,12 @@ function devEventAction(action) {
   const E = state.events;
   switch (action) {
     case 'eventTrigger': {
-      if (state.stage1Complete) return true;   // game is paused on the victory screen
+      if (isPaused()) return true;   // game is paused on a stage-complete screen
       const id = el('devEventSelect').value;
+      if ((EVENTS[id].stage || 1) !== currentStage()) {
+        addLog(`[Dev] That challenge belongs to Stage ${EVENTS[id].stage || 1}. Jump to that stage first.`);
+        return true;
+      }
       if (E.active) E.active = null;
       startEvent(id);
       addLog('[Dev] Triggered a challenge.');

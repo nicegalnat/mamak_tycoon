@@ -158,6 +158,15 @@ function newState() {
     log: [],
     playTimeMs: 0,
     stage1Complete: false,
+    // --- Stages 2–10 (stages.js) ---
+    stage: 1,                 // current stage number (1–10)
+    stages: {},               // each later stage's own data, keyed by stage number
+    stageStartTime: 0,        // game time when the current stage began
+    stageEarned: 0,           // money earned in the current stage
+    totalEarned: 0,           // money earned since Stage 2 began
+    stageComplete: false,     // showing the "stage complete" screen for stages 2–10
+    gameComplete: false,      // the game has been finished
+    stageHistory: [],         // { stage, seconds, earned } for each finished stage
   };
 }
 
@@ -256,7 +265,7 @@ function flourOnTheWay() {
    MODIFIERS — temporary (or permanent) effects from events
    ---------------------------------------------------------------------
    { id, label, until (game seconds, or null = permanent),
-     demandMult, productionMult, closed, ownerAway, staffAway, deliveryMult }
+     demandMult, productionMult, closed, ownerAway, staffAway, deliveryMult, incomeMult }
    closed    = the whole stall is shut (no sales at all)
    ownerAway = you are busy elsewhere: staff keep selling, but no manual sales
    ===================================================================== */
@@ -273,6 +282,7 @@ function addModifier(mod) {
     ownerAway: Boolean(mod.ownerAway),
     staffAway: mod.staffAway || 0,
     deliveryMult: mod.deliveryMult ?? 1,
+    incomeMult: mod.incomeMult ?? 1,   // used by Stages 2–10
   });
 }
 
@@ -472,8 +482,8 @@ function purchaseMessage(id, level) {
     case 'price':
       return `Price raised. Profit per roti is now ${money(profitPerRoti())}. Nobody complained… yet.`;
     case 'marketing': {
-      const ideas = ['printed flyers for the taman', 'posted in the neighbourhood Facebook group', 'painted a bright new signboard',
-        'got a food blogger to visit', 'went viral on TikTok', 'sponsored the futsal team'];
+      const ideas = ['printed flyers for the taman', 'posted in the taman residents\' group chat', 'painted a bright new signboard',
+        'got a food blogger to visit', 'went viral online', 'sponsored the futsal team'];
       return `Marketing level ${level}: ${ideas[(level - 1) % ideas.length]}. More customers coming!`;
     }
     default:
@@ -656,7 +666,7 @@ const FLAVOUR = [
   { roti: 1, text: 'Your first roti canai! Crispy outside, fluffy inside.' },
   { roti: 25, text: 'Uncle Lim orders his usual: roti kosong and teh tarik kurang manis.' },
   { roti: 100, text: '100 roti sold. The office crowd has started to notice you.' },
-  { roti: 200, text: 'A Grab rider picks up ten roti telur, bungkus.' },
+  { roti: 200, text: 'A delivery rider picks up ten roti telur, bungkus.' },
   { roti: 300, text: 'Football fans gather for supper. Roti everywhere!' },
   { roti: 400, text: 'There is a queue at your stall. The neighbours are jealous.' },
 ];
@@ -710,9 +720,18 @@ function checkStage1() {
   }
 }
 
+// True while a "stage complete" screen or the ending is showing.
+function isPaused() {
+  return state.gameComplete || state.stageComplete || (state.stage === 1 && state.stage1Complete);
+}
+
 function afterChange() {
-  checkReveals();
-  checkStage1();
+  if (state.stage === 1) {
+    checkReveals();
+    checkStage1();
+  } else if (typeof checkStageGoals === 'function') {
+    checkStageGoals();
+  }
   render();
 }
 
@@ -722,8 +741,15 @@ function afterChange() {
 
 // Advance the game by `seconds` of time. (The caller advances playTimeMs.)
 function tick(seconds) {
-  if (state.stage1Complete || seconds <= 0) return;
+  if (seconds <= 0 || isPaused()) return;
   cleanupModifiers();
+  if (state.stage >= 2) {
+    // Stages 2–10 have their own rules (stages.js)
+    if (typeof laterStageTick === 'function') laterStageTick(seconds);
+    if (typeof eventsTick === 'function') eventsTick(seconds);
+    if (typeof checkStageGoals === 'function') checkStageGoals();
+    return;
+  }
   processDeliveries();
   driftStats(seconds);
   if (typeof eventsTick === 'function') eventsTick(seconds);
@@ -743,7 +769,7 @@ function tick(seconds) {
 
 // Advance play time and the game together (used by the loop and dev tools).
 function advance(seconds) {
-  if (!state.stage1Complete) state.playTimeMs += seconds * 1000;
+  if (!isPaused()) state.playTimeMs += seconds * 1000;
   tick(seconds);
 }
 
@@ -798,6 +824,7 @@ function loadGame() {
   fresh.rotiProgress = Math.min(num(data.rotiProgress, 0), 0.999999);
   fresh.playTimeMs = num(data.playTimeMs, 0);
   fresh.stage1Complete = data.stage1Complete === true;
+  if (typeof loadStageState === 'function') loadStageState(data, fresh);
   if (plainObject(data.levels)) {
     for (const id of Object.keys(fresh.levels)) fresh.levels[id] = Math.floor(num(data.levels[id], 0));
   }
@@ -823,6 +850,7 @@ function loadGame() {
         ownerAway: m.ownerAway === true,
         staffAway: Math.floor(num(m.staffAway, 0)),
         deliveryMult: num(m.deliveryMult, 1),
+        incomeMult: num(m.incomeMult, 1),
       }));
   }
   if (plainObject(data.cooldowns)) {
@@ -888,7 +916,22 @@ function addLog(text) {
    DISPLAY
    ===================================================================== */
 
+const BIG_NAMES = ['', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion',
+  'sextillion', 'septillion', 'octillion', 'nonillion', 'decillion', 'undecillion', 'duodecillion'];
+
+// Formats any number: 12.5, 4,200, 3.14 million, 9.99 quadrillion…
+function fmt(n) {
+  if (!Number.isFinite(n)) return '∞';
+  const a = Math.abs(n);
+  if (a < 100) return String(Math.round(n * 100) / 100);
+  if (a < 1e6) return Math.round(n).toLocaleString('en-US');
+  const tier = Math.floor(Math.log10(a) / 3);
+  if (tier >= BIG_NAMES.length) return n.toExponential(2);
+  return (n / Math.pow(1000, tier)).toFixed(2) + ' ' + BIG_NAMES[tier];
+}
+
 function money(n) {
+  if (Math.abs(n) >= 1e6) return 'RM' + fmt(n);
   return 'RM' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
@@ -956,9 +999,19 @@ function upgradeEffectText(id) {
 function render() {
   const s = state;
   const done = s.stage1Complete;
+  const later = s.stage >= 2;
+  document.body.classList.toggle('later-stage', later);
+  if (later) {
+    document.body.classList.remove('stage-complete');   // the Stage 1 victory screen is behind us
+    if (typeof renderLaterStage === 'function') renderLaterStage();
+    if (typeof renderChallenges === 'function') renderChallenges();
+    renderLogAndSave();
+    return;
+  }
 
   document.body.classList.toggle('stage-complete', done);
-  setText('stageLabel', done ? 'Stage 1 complete — Restaurant unlocked' : 'Stage 1 — The Roadside Stall');
+  setHidden('stageArea', true);
+  setText('stageLabel', typeof stageLabelText === 'function' ? stageLabelText() : 'Stage 1');
 
   // Statistics
   setText('statCash', money(s.cash));
@@ -1016,6 +1069,11 @@ function render() {
   setHidden('devCompleteNote', !done);
   if (done) renderVictory();
 
+  renderLogAndSave();
+}
+
+function renderLogAndSave() {
+  const s = state;
   // Event log
   if (logDirty) {
     const list = el('eventLog');
@@ -1213,6 +1271,7 @@ function devAction(action) {
     case 'reset': requestReset(); return;
     default:
       if (typeof devEventAction === 'function' && devEventAction(action)) break;
+      if (typeof devStageAction === 'function' && devStageAction(action)) break;
       return;
   }
   afterChange();
@@ -1230,6 +1289,7 @@ function start() {
   checkReveals();
   checkStage1();
   if (typeof setupEventsUI === 'function') setupEventsUI();
+  if (typeof setupStagesUI === 'function') setupStagesUI();
   saveGame();
   render();
 
@@ -1289,6 +1349,7 @@ function start() {
 
 // Handy for testing in the browser console: MamakGame.state, MamakGame.tick(10) ...
 window.MamakGame = {
+  fmt,
   get state() { return state; },
   CONFIG, tick, advance, skipSeconds, buy, makeRoti, upgradeCost, saveGame, loadGame, resetGame, requestReset,
   productionCapacity, customerDemand, autoSalesRate, profitPerRoti, sellingPrice, cashPerRoti,
