@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mamak Tycoon</title>
-  <link rel="stylesheet" href="style.css?v=1.0.0">
+  <link rel="stylesheet" href="style.css?v=1.1.0">
 </head>
 <body>
   <header class="site-header">
@@ -14,6 +14,14 @@
   </header>
 
   <main>
+    <!-- PIXEL-ART SCENE (scene.js) -->
+    <div id="sceneColumn">
+      <section class="scene-panel" id="scenePanel" aria-label="Your mamak stall">
+        <div class="scene-frame"><canvas id="sceneCanvas" width="256" height="144" role="img" aria-label="Your mamak stall"></canvas></div>
+        <p class="scene-caption" id="sceneCaption" aria-live="polite"></p>
+      </section>
+    </div>
+
     <!-- STAGES 2–10 (stages.js) -->
     <div id="stageArea" hidden>
       <section class="panel stage-intro" id="stageIntro">
@@ -213,7 +221,7 @@
     <!-- SAVE / RESET -->
     <section class="panel footer-panel">
       <p class="small" id="saveStatus">Not saved yet</p>
-      <p class="small" id="versionLabel">Mamak Tycoon v1.0 — 10 stages</p>
+      <p class="small" id="versionLabel">Mamak Tycoon v1.1 — pixel art (Stage 1)</p>
       <button type="button" class="danger" id="resetButton">Reset Game</button>
       <div class="confirm-box" id="resetConfirm" hidden>
         <p><strong>Delete all progress?</strong> This cannot be undone.</p>
@@ -254,9 +262,10 @@
     </section>
   </main>
 
-  <script src="game.js?v=1.0.0"></script>
-  <script src="events.js?v=1.0.0"></script>
-  <script src="stages.js?v=1.0.0"></script>
-  <script src="stage-events.js?v=1.0.0"></script>
+  <script src="game.js?v=1.1.0"></script>
+  <script src="events.js?v=1.1.0"></script>
+  <script src="stages.js?v=1.1.0"></script>
+  <script src="stage-events.js?v=1.1.0"></script>
+  <script src="scene.js?v=1.1.0"></script>
 </body>
 </html>

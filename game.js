@@ -428,6 +428,7 @@ function sellRoti(count, source) {
   if (state.revealed.hygiene) {
     state.biz.hygiene = clamp(state.biz.hygiene - CONFIG.business.hygiene.dropPerRoti * count, 0, 100);
   }
+  sceneNotify('sale', { source, count });
   return { count, cash: roundMoney(cash) };
 }
 
@@ -462,6 +463,7 @@ function buy(id) {
   lastPurchaseAt[id] = now;
   state.cash = roundMoney(state.cash - cost);
   state.levels[id] += 1;
+  sceneNotify('upgrade', id);
   addLog(purchaseMessage(id, state.levels[id]));
   afterChange();
   saveGame();
@@ -594,9 +596,15 @@ function doAction(id) {
   const msg = a.run();
   if (a.cooldownSec() > 0) state.cooldowns[id] = gameTime() + a.cooldownSec();
   if (msg) addLog(msg);
+  sceneNotify('action', id);
   afterChange();
   saveGame();
   return true;
+}
+
+// Tells the pixel-art scene (scene.js) that something happened. Safe if the scene isn't loaded.
+function sceneNotify(type, data) {
+  if (window.MamakScene) window.MamakScene.notify(type, data);
 }
 
 function processDeliveries() {
@@ -606,6 +614,7 @@ function processDeliveries() {
   state.deliveries = state.deliveries.filter(d => d.arriveAt > t);
   for (const d of arrived) {
     const added = addFlour(d.amount);
+    sceneNotify('delivery', d.amount);
     addLog(`Flour delivery has arrived: +${added} flour.`);
   }
 }

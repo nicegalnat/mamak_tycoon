@@ -306,3 +306,59 @@ or recklessly. The ending text changes with the Rahman relationship.
 - Each stage is one entry in `STAGES` in `stages.js`, with `init`, `tick`, `income`, `view` and `goals`.
 - Screens are built from simple blocks (stats, buttons, rows, grid, bars, text). The renderer updates buttons in place, so taps don't miss on an iPad.
 - Challenges for a stage go in `stage-events.js`, with `stage: n`. Wrap them in `laterEvent()` so their costs scale with income.
+
+---
+
+# v1.1 — Pixel-art scene (Phase 1: Stage 1)
+
+## Art direction
+- Based on the owner's reference image: a roadside mamak at night, warm yellow interior, green awning, LED price board, a blue **24 JAM** neon sign (left) and a vertical red **MAMAK TYCOON** neon sign (right), with a dark city skyline.
+- Limited night palette, crisp pixels, outlined characters (adults 13×26 art pixels, children 9×18).
+- The art is drawn at **256×144** and scaled up by whole device pixels: exact whole numbers on standard screens, and filling the width on high-density screens, where per-pixel unevenness can't be seen.
+
+## Everything is driven by game data
+`sceneModel()` in `scene.js` reads the live game state every frame. Nothing is decorative randomness except ambient life (traffic, a cat, neon flicker, stars).
+
+| Visual | Game data |
+|---|---|
+| Staff behind the counter | `employees()`, minus staff away (empty apron on the hook) |
+| Sweat drops, droopy faces | Staff morale below 40 |
+| Cook flips a roti | Manual sale (`notify('sale')`); staff flip on automatic sales |
+| Griddle size, flames, hood | Griddle level 0 / 1 / 2 / 3+ |
+| LED board + menu prices | `sellingPrice()` and the price level |
+| Posters, bunting, TV, sign glow | Marketing level |
+| Queue length, frustration | Customer demand vs production capacity, wait time, reputation |
+| People eating at the table | Real sales serve the next customer in the queue |
+| Flour sacks on the shelf | Flour stock (4 sacks = full; flattened sacks = empty) |
+| Confused cook, no steam | Out of flour |
+| Grime and flies | Hygiene below 50 / 35 |
+| Shutter with a sign | Any closure (`CUCI`, `DITUTUP`, `TUTUP SEMENTARA`, `BAIKI`) |
+| "BRB" sign instead of the cook | Owner away at the DBKL office |
+| Grade A sticker, rat warning sign | Inspection result, ignored rats |
+| Delivery lorry drives past | A flour delivery arrives |
+
+## Challenge visuals (`EVENT_VISUALS`)
+A table maps each challenge to actors and props while it is waiting:
+
+- The Rahman Family crowd the counter. Their mood follows the relationship, and they eat at the table after being served properly.
+- Tikus! shows a running rat. It reappears now and then if rats were ignored.
+- Tepung Habis shows empty sacks and a confused cook.
+- The DBKL officer and the health officer appear with clipboards.
+- A cerewet customer, a confused customer, a spill puddle, griddle smoke, grumbling staff and a broken lorry each have their own visual.
+
+`MODIFIER_VISUALS` handles effects that continue after a decision, such as mopping, smoke from careful cooking, or slow deliveries.
+**To add a visual for a future challenge, add one line to these tables.**
+
+## Layout
+- **Desktop and iPad landscape (≥960px):** the scene sticks to the left, with the controls on the right.
+- **Phones and iPad portrait:** the order is scene, Make & Sell, Challenges, then stats. The scene takes about 30–40% of the screen height.
+- The scene is hidden for Stages 2–10 until their art phases.
+
+## Performance
+- Each frame takes about 1 ms to draw, at 12 frames per second (6 with reduced motion).
+- `requestAnimationFrame` stops when the tab is hidden.
+- Reduced-motion users get no traffic, cat or flicker, and a slower frame rate.
+
+## Next phases
+- **Phase 2:** Stages 2–4 (a larger restaurant, a district map view, a Malaysia map).
+- **Phase 3:** Stages 5–10 (breakfast mega-factories, the Ministry and Dhal Reserve, the festival, a world map, robot kitchens, the Mamakverse).
