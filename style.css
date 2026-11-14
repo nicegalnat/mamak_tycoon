@@ -1,0 +1,230 @@
+/* Mamak Tycoon — simple, minimalist styling */
+
+:root {
+  --bg: #faf6ef;
+  --panel: #ffffff;
+  --text: #2b2118;
+  --muted: #74685c;
+  --border: #ddd2c3;
+  --accent: #a0522d;      /* teh tarik brown */
+  --accent-text: #ffffff;
+  --good: #2e7d32;
+  --danger: #b3261e;
+  --disabled-bg: #ece6dd;
+  --disabled-text: #9b9187;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1915;
+    --panel: #26211c;
+    --text: #f1e9de;
+    --muted: #b3a797;
+    --border: #3d352d;
+    --accent: #d08a5a;
+    --accent-text: #1d1915;
+    --good: #81c784;
+    --danger: #ef7a72;
+    --disabled-bg: #332c25;
+    --disabled-text: #7d7369;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+
+.site-header {
+  max-width: 720px;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+.site-header h1 { margin: 0; letter-spacing: 0.08em; font-size: 1.9rem; }
+.tagline { margin: 2px 0 6px; color: var(--muted); font-style: italic; }
+.stage {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.panel h2 { margin: 0 0 10px; font-size: 1.1rem; }
+.panel h3 { margin: 12px 0 6px; font-size: 1rem; }
+
+[hidden] { display: none !important; }
+
+/* Stats grid */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  margin: 0;
+}
+.stats > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px dotted var(--border);
+  padding: 2px 0;
+}
+.stats dt { color: var(--muted); }
+.stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+
+/* Buttons */
+button {
+  font: inherit;
+  touch-action: manipulation;   /* stops iPad double-tap zoom */
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.make-button {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.make-button:active { filter: brightness(0.9); }
+
+.feedback {
+  min-height: 1.5em;
+  margin: 6px 0 2px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--good);
+}
+
+.small { font-size: 0.88rem; color: var(--muted); margin: 4px 0; }
+.hint { margin: 8px 0 0; font-size: 0.92rem; }
+.hint strong { color: var(--accent); }
+
+/* Upgrades */
+.upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.upgrade:first-of-type { border-top: none; padding-top: 0; }
+.upgrade-info { flex: 1; min-width: 0; }
+.upgrade h3 { margin: 0 0 2px; }
+.level { color: var(--muted); font-weight: 400; font-size: 0.9rem; }
+.effect { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+.buy {
+  flex: 0 0 auto;
+  min-width: 112px;
+  min-height: 48px;
+  padding: 6px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+.buy:disabled {
+  background: var(--disabled-bg);
+  border-color: var(--border);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+/* Milestones */
+.milestone { margin: 10px 0; }
+.milestone-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.95rem; }
+.milestone-row span:last-child { font-variant-numeric: tabular-nums; }
+.milestone.done .milestone-row span:first-child::before { content: "✔ "; color: var(--good); }
+progress { width: 100%; height: 10px; accent-color: var(--accent); }
+
+/* Victory */
+.victory { border: 2px solid var(--accent); text-align: center; }
+.victory h2 { font-size: 1.5rem; }
+.victory .quote { font-style: italic; }
+.victory .banner {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 8px;
+  border: 1px dashed var(--accent);
+  border-radius: 6px;
+}
+.victory .stats { text-align: left; margin: 0 0 12px; }
+.coming { color: var(--muted); }
+
+/* Event log */
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 0.92rem;
+}
+.log li { padding: 3px 0; border-bottom: 1px dotted var(--border); }
+.log .time { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 6px; }
+
+/* Footer & dev panel */
+.footer-panel { display: grid; gap: 10px; }
+.danger {
+  justify-self: start;
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--danger);
+}
+.dev summary { cursor: pointer; color: var(--muted); padding: 6px 0; }
+.dev-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.dev-buttons button {
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+}
+.dev-buttons button.danger { border-color: var(--danger); color: var(--danger); }
+
+/* Stage 1 complete: hide the playing panels */
+body.stage-complete .game-only { display: none !important; }
+
+/* Phones */
+@media (max-width: 520px) {
+  .stats { grid-template-columns: 1fr; }
+  .upgrade { flex-direction: column; align-items: stretch; }
+  .buy { width: 100%; }
+}

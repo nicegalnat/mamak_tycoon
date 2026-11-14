@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mamak Tycoon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>MAMAK TYCOON</h1>
+    <p class="tagline">From one roti to world domination.</p>
+    <p class="stage" id="stageLabel">Stage 1 — The Roadside Stall</p>
+  </header>
+
+  <main>
+    <!-- 1. STATISTICS -->
+    <section class="panel" id="statsPanel">
+      <h2>Business</h2>
+      <dl class="stats">
+        <div><dt>Cash</dt><dd id="statCash">RM0.00</dd></div>
+        <div><dt>Roti sold</dt><dd id="statRoti">0</dd></div>
+        <div><dt>Profit per roti</dt><dd id="statProfit">RM1.00</dd></div>
+        <div><dt>Employees</dt><dd id="statEmployees">0</dd></div>
+        <div><dt>Production rate</dt><dd id="statRate">0 roti/sec</dd></div>
+        <div><dt>Lifetime revenue</dt><dd id="statRevenue">RM0.00</dd></div>
+        <div><dt>Net profit</dt><dd id="statNet">RM0.00</dd></div>
+        <div><dt>Play time</dt><dd id="statTime">0:00</dd></div>
+      </dl>
+    </section>
+
+    <!-- 2. PRODUCTION -->
+    <section class="panel game-only" id="productionPanel">
+      <h2>Production</h2>
+      <button type="button" class="make-button" id="makeButton">Make &amp; Sell Roti Canai</button>
+      <p class="feedback" id="clickFeedback" aria-live="polite">&nbsp;</p>
+      <p class="small" id="priceInfo">Selling price RM1.50 (ingredients RM0.50, profit RM1.00)</p>
+
+      <div id="autoPanel" hidden>
+        <h3>Automatic sales</h3>
+        <dl class="stats compact">
+          <div><dt>Production capacity</dt><dd id="autoCapacity">0 roti/sec</dd></div>
+          <div><dt>Customer demand</dt><dd id="autoDemand">0 roti/sec</dd></div>
+          <div><dt>Actual sales</dt><dd id="autoActual">0 roti/sec</dd></div>
+          <div><dt>Auto income</dt><dd id="autoIncome">RM0.00/sec</dd></div>
+        </dl>
+        <p class="hint" id="limitHint"></p>
+      </div>
+    </section>
+
+    <!-- 3. UPGRADES -->
+    <section class="panel game-only" id="upgradesPanel" hidden>
+      <h2>Upgrades</h2>
+      <div class="upgrade" id="upg-rotiMan" hidden>
+        <div class="upgrade-info">
+          <h3>Hire Roti Man <span class="level" id="lvl-rotiMan"></span></h3>
+          <p class="effect" id="eff-rotiMan"></p>
+        </div>
+        <button type="button" class="buy" data-buy="rotiMan" id="buy-rotiMan">Buy</button>
+      </div>
+      <div class="upgrade" id="upg-price" hidden>
+        <div class="upgrade-info">
+          <h3>Increase Roti Price <span class="level" id="lvl-price"></span></h3>
+          <p class="effect" id="eff-price"></p>
+        </div>
+        <button type="button" class="buy" data-buy="price" id="buy-price">Buy</button>
+      </div>
+      <div class="upgrade" id="upg-griddle" hidden>
+        <div class="upgrade-info">
+          <h3>Upgrade Griddle <span class="level" id="lvl-griddle"></span></h3>
+          <p class="effect" id="eff-griddle"></p>
+        </div>
+        <button type="button" class="buy" data-buy="griddle" id="buy-griddle">Buy</button>
+      </div>
+      <div class="upgrade" id="upg-marketing" hidden>
+        <div class="upgrade-info">
+          <h3>Marketing <span class="level" id="lvl-marketing"></span></h3>
+          <p class="effect" id="eff-marketing"></p>
+        </div>
+        <button type="button" class="buy" data-buy="marketing" id="buy-marketing">Buy</button>
+      </div>
+    </section>
+
+    <!-- 4. MILESTONES -->
+    <section class="panel game-only" id="milestonesPanel" hidden>
+      <h2>Milestones — Stage 1</h2>
+      <p class="small">Reach all three goals to open a proper restaurant.</p>
+      <div class="milestone">
+        <div class="milestone-row"><span>Sell 500 roti</span><span id="msRotiText">0 / 500</span></div>
+        <progress id="msRoti" max="1" value="0"></progress>
+      </div>
+      <div class="milestone">
+        <div class="milestone-row"><span>Hire 3 employees</span><span id="msStaffText">0 / 3</span></div>
+        <progress id="msStaff" max="1" value="0"></progress>
+      </div>
+      <div class="milestone">
+        <div class="milestone-row"><span>Earn RM1,000 lifetime revenue</span><span id="msRevenueText">RM0 / RM1,000</span></div>
+        <progress id="msRevenue" max="1" value="0"></progress>
+      </div>
+    </section>
+
+    <!-- STAGE 1 VICTORY -->
+    <section class="panel victory" id="victoryPanel" hidden>
+      <h2>CONGRATULATIONS, BOSS!</h2>
+      <p class="quote">“Your roadside stall has become the neighbourhood’s favourite mamak. Time to buka kedai!”</p>
+      <p class="banner">STAGE 1 COMPLETE — RESTAURANT UNLOCKED</p>
+      <h3>Your stall’s final numbers</h3>
+      <dl class="stats" id="victoryStats"></dl>
+      <p class="coming">Stage 2 — <strong>The Restaurant</strong> — is coming in the next update. Your progress is saved.</p>
+    </section>
+
+    <!-- 5. EVENT LOG -->
+    <section class="panel" id="logPanel">
+      <h2>Event log</h2>
+      <ul class="log" id="eventLog"></ul>
+    </section>
+
+    <!-- SAVE / RESET -->
+    <section class="panel footer-panel">
+      <p class="small" id="saveStatus">Not saved yet</p>
+      <button type="button" class="danger" id="resetButton">Reset Game</button>
+
+      <details class="dev" id="devPanel">
+        <summary>Developer panel (for testing)</summary>
+        <p class="small">Cheats for testing. Added cash does not count as revenue.</p>
+        <div class="dev-buttons">
+          <button type="button" data-dev="cash100">Add RM100</button>
+          <button type="button" data-dev="cash1000">Add RM1,000</button>
+          <button type="button" data-dev="roti100">Add 100 roti sold</button>
+          <button type="button" data-dev="skip60">Skip 60 seconds</button>
+          <button type="button" class="danger" data-dev="reset">Reset progress</button>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
