@@ -337,14 +337,14 @@ All three web fonts are OFL (commercial use allowed).
 ## Structure
 | Area | What it shows |
 |---|---|
-| Masthead | Kicker "Restoran • Buka 24 Jam • Sejak Hari Ini", worn MAMAK TYCOON, Malay tagline, stage box (STAGE n / 10, stage name, 10 progress dots) |
+| Masthead | Kicker "Restaurant • Open 24 Hours • Since Today", worn MAMAK TYCOON, tagline, stage box (STAGE n / 10, stage name, 10 progress dots) |
 | Tabs | Home · Menu & Upgrades · Staff & Operations · Franchise & Locations. The last tab you used is remembered on the device; empty tabs are hidden |
-| Stat strip | Stage 1: cash, production, demand, reputation stars (0–100 reputation → 0–5 stars; "Belum dinilai" until unlocked). Stages 2–10: the first four figures of that stage's overview |
-| Home (Stage 1) | Dapur (main button and real price/sales figures, Automasi Jualan), Stok Bahan (real flour stock; "Belum dikira" before flour tracking), Sasaran checklist, Notis Khas receipt, event log |
+| Stat strip | Stage 1: cash, production, demand, reputation stars (0–100 reputation → 0–5 stars; "Not rated yet" until unlocked). Stages 2–10: the first four figures of that stage's overview |
+| Home (Stage 1) | Kitchen (main button, real price/sales figures, Automatic Sales), Ingredient Stock (real flour stock; "Not tracked yet" before flour tracking), Goals checklist, Special Notice receipt, event log |
 | Menu & Upgrades | Upgrades as menu items with RM price tags |
-| Staff & Operations | Business health (cleaning, staff treats, flour orders), Kira-Kira totals, event log |
+| Staff & Operations | Business health (cleaning, staff treats, flour orders), business totals, event log |
 | Franchise & Locations | Stage 1: a teaser list of the stages to come. Stage 2: opening new outlets |
-| Notis Khas | Torn receipt with an order number, rubber-stamp tier, numbered choices [1] [2] [3] and a barcode. It follows you to other tabs while a challenge is waiting |
+| Special Notice | Torn receipt with an order number, rubber-stamp tier, numbered choices [1] [2] [3] and a barcode. It follows you to other tabs while a challenge is waiting |
 
 Stages 2–10 sections are assigned to tabs in `ui.js` (`STAGE_TABS`). Main
 gameplay stays on Home, purchases go to Menu, and overview/records go to

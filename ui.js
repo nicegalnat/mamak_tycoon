@@ -7,7 +7,7 @@
      • Tabs: Home · Menu & Upgrades · Staff & Operations · Franchise & Locations
      • The stat strip under the tabs (always real game numbers)
      • The stage box in the masthead
-     • Small menu lists (Dapur figures, Stok Bahan, franchise teaser)
+     • Small menu lists (kitchen figures, ingredient stock, franchise teaser)
    ===================================================================== */
 
 const TABS = ['home', 'menu', 'ops', 'franchise'];
@@ -59,10 +59,10 @@ function stripValues() {
   if (s.stage === 1) {
     const hired = employees() > 0;
     return [
-      ['Wang Tunai', money(s.cash)],
-      ['Pengeluaran', hired ? rate(productionCapacity()) : 'Tangan sendiri'],
-      ['Permintaan Pelanggan', hired ? rate(customerDemand()) : 'Ikut tangan'],
-      ['Reputasi', s.revealed.reputation ? stars(s.biz.reputation) : 'Belum dinilai'],
+      ['Cash', money(s.cash)],
+      ['Production', hired ? rate(productionCapacity()) : 'By hand'],
+      ['Customer Demand', hired ? rate(customerDemand()) : 'As fast as you tap'],
+      ['Reputation', s.revealed.reputation ? stars(s.biz.reputation) : 'Not rated yet'],
     ];
   }
   const def = STAGES[s.stage];
@@ -110,10 +110,10 @@ function renderUI() {
     if (stockActive()) {
       setText('stockFlour', `${formatNumber(s.biz.flour)} / ${CONFIG.business.flour.storageMax}`);
       const d = s.deliveries[0];
-      setText('stockNote', s.biz.flour < 1 ? 'HABIS! No flour, no roti. Order more now.'
+      setText('stockNote', s.biz.flour < 1 ? 'OUT OF FLOUR! No flour, no roti. Order more now.'
         : (s.biz.flour < CONFIG.business.flour.lowWarning ? 'Running low! ' : `Enough for ${formatNumber(s.biz.flour)} roti. `) + (d ? `Delivery of ${d.amount} on the way.` : ''));
     } else {
-      setText('stockFlour', 'Belum dikira');
+      setText('stockFlour', 'Not tracked yet');
       setText('stockNote', "Flour isn't tracked yet. Everything is fresh from the supplier for now.");
     }
     setHidden('stockLink', !stockActive());
@@ -133,7 +133,7 @@ function renderUI() {
       const li = document.createElement('li');
       li.innerHTML = '';
       const name = document.createElement('span'); name.textContent = `Stage ${n}: ${STAGES[n].title}`;
-      const lock = document.createElement('span'); lock.className = 'lock'; lock.textContent = 'Dikunci';
+      const lock = document.createElement('span'); lock.className = 'lock'; lock.textContent = 'Locked';
       li.append(name, lock);
       list.appendChild(li);
     }

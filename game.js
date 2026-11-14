@@ -1124,7 +1124,7 @@ function renderProduction() {
   const s = state;
   const block = blockReason();
   const btn = el('makeButton');
-  let label = 'Buat & Jual Roti Canai';
+  let label = 'Make & Sell Roti Canai';
   if (block === 'closed') label = `Stall closed — opens in ${secondsLeft('closed')}s`;
   else if (block === 'flour') label = 'Out of flour! Restock in Business health';
   else if (block === 'away') label = `You're busy: ${awayLabel()} (${secondsLeft('ownerAway')}s)`;

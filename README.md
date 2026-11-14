@@ -134,12 +134,12 @@ hidden in a later version.
 Mamak Tycoon is a **text-based** game styled like a worn, ring-bound,
 laminated mamak menu sitting on a dark blue table:
 
-- a yellow masthead with a worn maroon **MAMAK TYCOON**, the tagline *"Game Perniagaan Mamak Paling Osem!"* and a stage box
+- a yellow masthead with a worn maroon **MAMAK TYCOON**, the tagline *"The most shiok mamak business game!"* and a stage box
 - folder **tabs**: *Home · Menu & Upgrades · Staff & Operations · Franchise & Locations*
-- a **stat strip** (Wang Tunai · Pengeluaran · Permintaan Pelanggan · Reputasi), always showing real game numbers
-- cream menu cards with maroon headers and dotted price leaders, yellow price tags, and a big yellow **Buat & Jual Roti Canai** button
-- a **Sasaran** checklist with a yellow call-out, and **Stok Bahan** (flour)
-- surprise challenges printed on a torn **receipt**: *** NOTIS KHAS ***, an order number, numbered choices and a barcode
+- a **stat strip** (Cash · Production · Customer Demand · Reputation), always showing real game numbers
+- cream menu cards with maroon headers and dotted price leaders, yellow price tags, and a big yellow **Make & Sell Roti Canai** button
+- a **Goals** checklist with a yellow call-out, and **Ingredient Stock** (flour)
+- surprise challenges printed on a torn **receipt**: *** SPECIAL NOTICE ***, an order number, numbered choices and a barcode
 - binder rings, aged-paper stains and a peeling laminate corner, all generated in CSS (no image files)
 
 Fonts are **Alfa Slab One**, **Zilla Slab** and **Source Sans 3** from Google
@@ -157,7 +157,7 @@ empty tabs are hidden.
 - **v1.0**: all 10 stages, 40+ new challenges, a Rahman visit in every stage, a finale and an ending
 - **v1.1**: animated pixel-art scene for Stage 1 (removed in v1.2)
 - **v1.2**: "Menu Edition" redesign. Text-based mamak-menu styling; the pixel-art scene was removed
-- **v1.3**: "Menu Book" interface. Ring-bound menu look, tabs, a stat strip and a receipt-style challenge notice
+- **v1.3**: "Menu Book" interface. Ring-bound menu look, tabs, a stat strip and a receipt-style challenge notice; English labels with a light Malaysian flavour
 
 ## Ideas for later
 - A New Game+ mode with a prestige bonus ("pass the stall to your children")

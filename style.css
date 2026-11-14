@@ -437,7 +437,7 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
 .tier[data-tier="major"] { border-color: var(--maroon); color: var(--maroon); border-width: 3px; }
 .timer { font-family: var(--font-body); font-size: 0.88rem; font-weight: 700; color: var(--maroon); }
 .choices { display: grid; gap: 6px; counter-reset: choice; }
-#chChoices::before { content: "APA TINDAKAN ANDA?"; display: block; text-align: center; font-weight: 700; color: var(--maroon); letter-spacing: 0.06em; margin: 4px 0 2px; }
+#chChoices::before { content: "WHAT WILL YOU DO?"; display: block; text-align: center; font-weight: 700; color: var(--maroon); letter-spacing: 0.06em; margin: 4px 0 2px; }
 .choice { position: relative; display: grid; gap: 2px; width: 100%; min-height: 52px; padding: 8px 10px 8px 12px; border: 1.5px solid var(--line); border-radius: 6px; background: rgba(255, 255, 255, 0.5); color: var(--ink); text-align: left; }
 #chChoices .choice { padding-left: 40px; counter-increment: choice; }
 #chChoices .choice::before { content: "[" counter(choice) "]"; position: absolute; left: 8px; top: 9px; font-family: var(--font-receipt); font-weight: 700; color: var(--ink); }
@@ -488,8 +488,8 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 999px; }
   border-bottom: 3px solid var(--yellow);
 }
 .stage-intro > summary::-webkit-details-marker { display: none; }
-.stage-intro > summary::after { content: "Baca ▾"; font-size: 0.78rem; color: var(--yellow); white-space: nowrap; }
-.stage-intro[open] > summary::after { content: "Tutup ▴"; }
+.stage-intro > summary::after { content: "Read ▾"; font-size: 0.78rem; color: var(--yellow); white-space: nowrap; }
+.stage-intro[open] > summary::after { content: "Hide ▴"; }
 .stage-intro[open] { padding-bottom: 14px; }
 .stage-intro[open] > p { margin: 12px 0 0; }
 
